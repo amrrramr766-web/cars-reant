@@ -96,7 +96,6 @@ flutter run
 المفضلة	/api/favorite/add, /api/favorite/remove
 الحجز	/api/booking/add
 
-إذا تحتاج، يمكنني إضافة ملف API كامل داخل مجلد docs/ لعرض جميع التفاصيل.
 
 🤝 Contributing
 
