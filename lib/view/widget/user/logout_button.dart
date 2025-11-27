@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:car_rent/core/constant/app_colors.dart';
 
 class LogoutButton extends StatelessWidget {
   const LogoutButton({super.key});
@@ -8,8 +9,8 @@ class LogoutButton extends StatelessWidget {
     return ElevatedButton.icon(
       onPressed: () {},
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.red[100],
-        foregroundColor: Colors.red[600],
+        backgroundColor: AppColors.red100,
+        foregroundColor: AppColors.red600,
         minimumSize: const Size.fromHeight(50),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),

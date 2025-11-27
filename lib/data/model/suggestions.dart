@@ -1,43 +1,46 @@
 class SuggestionsModel {
-  final int? id;
-  final String? title;
-  final int? carId;
-  final String? category;
-  final bool? isActive;
-  final String? createdAt;
-  final String? carName;
+  int? id;
+  String? title;
+  int? carId;
+  double? presPerDay;
+  String? category;
+  bool? isActive;
+  String? createdAt;
+  String? carName;
 
   SuggestionsModel({
     this.id,
     this.title,
     this.carId,
+    this.presPerDay,
     this.category,
     this.isActive,
     this.createdAt,
     this.carName,
   });
 
-  factory SuggestionsModel.fromJson(Map<String, dynamic> json) {
-    return SuggestionsModel(
-      id: json['id'] as int?,
-      title: json['title'] as String?,
-      carId: json['carId'] as int?,
-      category: json['category'] as String?,
-      isActive: json['isActive'] as bool?,
-      createdAt: json['createdAt'] as String?,
-      carName: json['carName'] as String?,
-    );
+  SuggestionsModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    title = json['title'];
+    carId = json['carId'];
+    presPerDay = json['presPerDay'] != null
+        ? (json['presPerDay'] as num).toDouble()
+        : null;
+    isActive = json['isActive'];
+    createdAt = json['createdAt'];
+    carName = json['carName'];
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'title': title,
-      'carId': carId,
-      'category': category,
-      'isActive': isActive,
-      'createdAt': createdAt,
-      'carName': carName,
-    };
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['title'] = title;
+    data['carId'] = carId;
+    data['presPerDay'] = presPerDay;
+    data['category'] = category;
+    data['isActive'] = isActive;
+    data['createdAt'] = createdAt;
+    data['carName'] = carName;
+    return data;
   }
 }

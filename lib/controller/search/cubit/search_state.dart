@@ -1,4 +1,3 @@
-import 'package:car_rent/data/model/car_model.dart';
 import 'package:car_rent/data/model/suggestions.dart';
 import 'package:equatable/equatable.dart';
 
@@ -16,7 +15,7 @@ final class SearchResultsLoading extends SearchState {}
 final class SearchSuggestionsLoading extends SearchState {}
 
 final class SearchLoaded extends SearchState {
-  final List<CarModel> searchResults;
+  final List<SuggestionsModel> searchResults;
   const SearchLoaded({required this.searchResults});
   @override
   List<Object> get props => [searchResults];

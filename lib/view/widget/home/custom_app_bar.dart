@@ -8,6 +8,7 @@ import 'package:car_rent/view/pages/user/user.dart';
 import 'package:car_rent/view/widget/home/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:car_rent/core/constant/app_colors.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
@@ -44,13 +45,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 children: [
                   CircleAvatar(
                     radius: 22,
-                    backgroundColor: Colors.deepPurple.shade200,
+                    backgroundColor: AppColors.deepPurple200,
                     child: Text(
                       userName.isNotEmpty ? userName[0].toUpperCase() : "G",
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: AppColors.white,
                       ),
                     ),
                   ),
@@ -60,7 +61,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     children: [
                       const Text(
                         "Welcome 👋",
-                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                        style: TextStyle(fontSize: 12, color: AppColors.grey),
                       ),
                       Text(
                         userName,

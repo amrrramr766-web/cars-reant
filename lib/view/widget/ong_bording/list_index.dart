@@ -4,6 +4,7 @@ import 'package:car_rent/controller/onBording/cubit/on_bording_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:car_rent/core/constant/app_colors.dart';
 
 class ListIndex extends StatelessWidget {
   final PageController pageController;
@@ -35,8 +36,8 @@ class ListIndex extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     color: dotIndex == state
-                        ? Colors.deepPurple.shade900
-                        : Colors.grey.shade300,
+                        ? AppColors.deepPurple900
+                        : AppColors.grey300,
                   ),
                 ),
               ),
@@ -47,7 +48,7 @@ class ListIndex extends StatelessWidget {
               height: 40,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurple.shade900,
+                  backgroundColor: AppColors.deepPurple900,
                 ),
                 onPressed: () async {
                   if (state == itemCount - 1) {
@@ -71,7 +72,7 @@ class ListIndex extends StatelessWidget {
                   state == itemCount - 1
                       ? t?.welcomeButton ?? "Start"
                       : t?.nextButton ?? "Next",
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: AppColors.white),
                 ),
               ),
             ),

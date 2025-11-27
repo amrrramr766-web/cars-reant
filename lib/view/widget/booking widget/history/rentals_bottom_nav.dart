@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:car_rent/core/constant/app_colors.dart';
 
 class RentalsBottomNav extends StatelessWidget {
   final int currentIndex;
@@ -12,11 +13,11 @@ class RentalsBottomNav extends StatelessWidget {
     return BottomNavigationBar(
       currentIndex: currentIndex,
       onTap: (_) {},
-      selectedItemColor: const Color(0xFF0B95DA),
-      unselectedItemColor: isDark ? Colors.grey[400] : const Color(0xFF6C757D),
+      selectedItemColor: AppColors.primaryBlue,
+      unselectedItemColor: isDark ? AppColors.grey400 : AppColors.greySecondary,
       backgroundColor: isDark
-          ? const Color(0xFF101C22)
-          : const Color(0xFFF5F7F8),
+          ? AppColors.backgroundDark
+          : AppColors.backgroundLightAlt,
       type: BottomNavigationBarType.fixed,
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),

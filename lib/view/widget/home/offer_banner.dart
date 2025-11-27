@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:car_rent/data/model/offer_model.dart';
 import 'package:flutter/material.dart';
+import 'package:car_rent/core/constant/app_colors.dart';
 
 class OfferBanner extends StatefulWidget {
   final List<OfferModel> offers;
@@ -87,7 +88,10 @@ class _OfferBannerState extends State<OfferBanner> {
                   gradient: LinearGradient(
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
-                    colors: [Colors.black.withOpacity(0.6), Colors.transparent],
+                    colors: [
+                      AppColors.blackWithOpacity(0.6),
+                      AppColors.transparent,
+                    ],
                   ),
                 ),
                 padding: const EdgeInsets.all(12),
@@ -99,7 +103,7 @@ class _OfferBannerState extends State<OfferBanner> {
                       child: Text(
                         offer.description,
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: AppColors.white,
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
@@ -113,13 +117,13 @@ class _OfferBannerState extends State<OfferBanner> {
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.redAccent.withOpacity(0.9),
+                        color: AppColors.accentRed.withOpacity(0.9),
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
                         "${offer.persenteg}%",
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: AppColors.white,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

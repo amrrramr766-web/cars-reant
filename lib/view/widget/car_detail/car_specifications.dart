@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:car_rent/data/model/car_model.dart';
+import 'package:car_rent/core/constant/app_colors.dart';
 
 class CarSpecifications extends StatelessWidget {
   final CarModel car;
@@ -42,7 +43,7 @@ class _SpecItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 22.sp, color: Colors.deepPurple),
+        Icon(icon, size: 22.sp, color: AppColors.deepPurple),
         SizedBox(width: 8.w),
         Expanded(child: Text(label)),
       ],

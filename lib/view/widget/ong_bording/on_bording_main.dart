@@ -1,4 +1,5 @@
 import 'package:car_rent/controller/onBording/cubit/on_bording_cubit.dart';
+import 'package:car_rent/core/constant/app_colors.dart';
 import 'package:car_rent/data/data_source/local%20data/onBoardingModel.dart';
 import 'package:car_rent/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -83,7 +84,7 @@ class _OnBordingMainState extends State<OnBordingMain> {
                   Text(
                     descriptionTranslated,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 16, color: Colors.grey),
+                    style: const TextStyle(fontSize: 16, color: AppColors.grey),
                   ),
                 ],
               );

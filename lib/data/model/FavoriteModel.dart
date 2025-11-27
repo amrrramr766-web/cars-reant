@@ -14,11 +14,11 @@ class FavoriteModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['favoriteID'] = this.favoriteID;
-    data['userID'] = this.userID;
-    data['itemID'] = this.itemID;
-    data['createdAt'] = this.createdAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['favoriteID'] = favoriteID;
+    data['userID'] = userID;
+    data['itemID'] = itemID;
+    data['createdAt'] = createdAt;
     return data;
   }
 }

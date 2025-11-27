@@ -3,7 +3,6 @@ import 'package:car_rent/controller/search/cubit/search_state.dart';
 import 'package:car_rent/data/data_source/remote/search_data.dart';
 import 'package:car_rent/data/model/car_model.dart';
 import 'package:car_rent/data/model/suggestions.dart';
-import 'package:equatable/equatable.dart';
 
 class SearchCubit extends Cubit<SearchState> {
   final SearchData searchData;
@@ -24,11 +23,11 @@ class SearchCubit extends Cubit<SearchState> {
           print(
             '✅ [SearchCubit] Search results received: ${data is List ? data.length : 0} items',
           );
-          List<CarModel> searchResults = [];
+          List<SuggestionsModel> searchResults = [];
           if (data is List && data.isNotEmpty) {
             searchResults = data.map((e) {
               print('📦 [SearchCubit] Mapping search result...');
-              return CarModel.fromJson(e as Map<String, dynamic>);
+              return SuggestionsModel.fromJson(e as Map<String, dynamic>);
             }).toList();
             print(
               '✅ [SearchCubit] ${searchResults.length} search results mapped successfully',

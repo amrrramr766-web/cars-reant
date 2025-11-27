@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:car_rent/core/constant/app_colors.dart';
 
 class CarInfoRow extends StatelessWidget {
   final String title;
@@ -18,7 +19,7 @@ class CarInfoRow extends StatelessWidget {
             value,
             style: const TextStyle(
               fontWeight: FontWeight.w600,
-              color: Colors.deepPurple,
+              color: AppColors.deepPurple,
             ),
           ),
         ],

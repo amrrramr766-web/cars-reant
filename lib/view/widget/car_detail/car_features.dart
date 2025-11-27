@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:car_rent/core/constant/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CarFeatures extends StatelessWidget {
@@ -37,9 +38,9 @@ class _FeatureItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Chip(
-      avatar: Icon(icon, size: 18.sp, color: Colors.deepPurple),
+      avatar: Icon(icon, size: 18.sp, color: AppColors.deepPurple),
       label: Text(label),
-      backgroundColor: Colors.deepPurple.shade50,
+      backgroundColor: AppColors.deepPurple50,
       side: BorderSide.none,
     );
   }

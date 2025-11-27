@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:car_rent/core/constant/app_colors.dart';
 
 class CarLocation extends StatelessWidget {
   const CarLocation({super.key});
@@ -22,7 +23,7 @@ class CarLocation extends StatelessWidget {
             color: Theme.of(context).cardColor,
             boxShadow: [
               BoxShadow(
-                color: Colors.black12,
+                color: AppColors.black12,
                 blurRadius: 6,
                 offset: const Offset(0, 3),
               ),
@@ -58,7 +59,7 @@ class CarLocation extends StatelessWidget {
                     Text(
                       'View on map',
                       style: TextStyle(
-                        color: Colors.deepPurple,
+                        color: AppColors.deepPurple,
                         fontSize: 13.sp,
                       ),
                       overflow: TextOverflow.ellipsis,

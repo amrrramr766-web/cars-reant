@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:car_rent/core/constant/app_colors.dart';
 
 class SectionTitle extends StatelessWidget {
   final String title;
@@ -8,7 +9,10 @@ class SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title.toUpperCase(),
-      style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        color: AppColors.grey,
+      ),
     );
   }
 }

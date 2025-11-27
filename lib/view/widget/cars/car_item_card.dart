@@ -1,6 +1,7 @@
 import 'package:car_rent/view/pages/car_delteal/car_delteal.dart';
 import 'package:car_rent/view/widget/common_wedget/fave_button.dart';
 import 'package:flutter/material.dart';
+import 'package:car_rent/core/constant/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:car_rent/data/model/car_model.dart';
 import 'package:car_rent/controller/car_delteal/cubit/car_deteail_dart_cubit.dart';
@@ -25,8 +26,21 @@ class CarItemCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Row(
+              Stack(
                 children: [
+                  // صورة السيارة
+                  ClipRRect(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(15.r),
+                    ),
+                    child: Image.network(
+                      car.imageUrl!,
+                      height:
+                          constraints.maxHeight * 0.5, // 40% من ارتفاع الكارد
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                   faveButton(
                     userId: userId,
                     carId: car.carID!,
@@ -34,16 +48,7 @@ class CarItemCard extends StatelessWidget {
                   ),
                 ],
               ),
-              // صورة السيارة
-              ClipRRect(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(15.r)),
-                child: Image.network(
-                  car.imageUrl!,
-                  height: constraints.maxHeight * 0.45, // 45% من ارتفاع الكارد
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
+
               SizedBox(height: 8.h),
 
               // اسم السيارة والحالة
@@ -63,16 +68,15 @@ class CarItemCard extends StatelessWidget {
                       car.isAvailable! ? "Available" : "Not Available",
                       style: TextStyle(
                         color: car.isAvailable!
-                            ? Colors.green.shade700
-                            : Colors.red.shade700,
+                            ? AppColors.green700
+                            : AppColors.red700,
                         fontSize: 14.sp,
                       ),
                     ),
                   ],
                 ),
               ),
-              Spacer(), // ← يضغط الزر للأسفل دائماً
-              // زر التفاصيل
+
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
                 child: SizedBox(
@@ -95,7 +99,7 @@ class CarItemCard extends StatelessWidget {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 15, 1, 39),
+                      backgroundColor: AppColors.darkPurple,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.r),
                       ),
@@ -105,7 +109,7 @@ class CarItemCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: AppColors.white,
                       ),
                     ),
                   ),

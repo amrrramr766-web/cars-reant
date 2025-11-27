@@ -1,13 +1,13 @@
 import 'dart:ui';
 
 import 'package:car_rent/controller/auth/login/cubit/login_cubit.dart';
+import 'package:car_rent/controller/fave/cubit/fave_cubit.dart';
 import 'package:car_rent/controller/home/cubit/home_cubit.dart';
 import 'package:car_rent/controller/search/cubit/search_cubit.dart';
 import 'package:car_rent/core/class/crud.dart';
 import 'package:car_rent/core/constant/app_colors.dart';
 import 'package:car_rent/data/data_source/remote/auth/login.dart';
 import 'package:car_rent/data/data_source/remote/search_data.dart';
-import 'package:car_rent/data/model/car_model.dart';
 import 'package:car_rent/server_locator.dart';
 import 'package:car_rent/view/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:car_rent/l10n/app_localizations.dart';
 import 'package:car_rent/routes.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +31,7 @@ void main() async {
           create: (context) =>
               LoginCubit(LoginData(Crud()))..loadUserFromPrefs(),
         ),
+        BlocProvider<FaveCubit>(create: (context) => sl<FaveCubit>()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),

@@ -1,9 +1,13 @@
+import 'package:car_rent/controller/car_delteal/cubit/car_deteail_dart_cubit.dart';
+import 'package:car_rent/data/model/suggestions.dart';
+import 'package:car_rent/server_locator.dart';
 import 'package:car_rent/view/pages/car_delteal/car_delteal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:car_rent/controller/search/cubit/search_cubit.dart';
 import 'package:car_rent/controller/search/cubit/search_state.dart';
 import 'package:car_rent/data/model/car_model.dart';
+import 'package:car_rent/core/constant/app_colors.dart';
 
 class SearchPage extends SearchDelegate {
   final SearchCubit searchCubit;
@@ -62,28 +66,37 @@ class SearchPage extends SearchDelegate {
           return ListView.builder(
             itemCount: suggestions.length,
             itemBuilder: (context, index) {
-              final s = suggestions[index];
+              final cars = suggestions[index];
 
               return Card(
                 child: ListTile(
-                  title: Text(s.carName ?? ''),
+                  title: Text(cars.carName ?? ''),
+                  subtitle: Text(cars.category ?? ''),
+                  trailing: Text(
+                    cars.presPerDay.toString(),
+                    style: TextStyle(
+                      color: AppColors.successColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   onTap: () async {
-                    final car = await searchCubit.getCarDetails(s.carId ?? 0);
-
-                    if (car != null) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => CarDetailsPage(car: car),
+                    final CarModel carModel =
+                        await searchCubit.getCarDetails(cars.carId ?? 0)
+                            as CarModel;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BlocProvider(
+                          create: (context) {
+                            final cubit = sl<CarDeteailDartCubit>();
+                            cubit.fetchReviews(cars.carId!);
+                            return cubit;
+                          },
+                          child: CarDetailsPage(car: carModel),
                         ),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("تفاصيل السيارة غير متوفرة."),
-                        ),
-                      );
-                    }
+                      ),
+                    );
                   },
                 ),
               );
@@ -104,17 +117,35 @@ class SearchPage extends SearchDelegate {
           return ListView.builder(
             itemCount: results.length,
             itemBuilder: (context, index) {
-              final CarModel car = results[index];
+              final SuggestionsModel car = results[index];
 
               return Card(
                 child: ListTile(
-                  title: Text(car.brand ?? ''),
-                  subtitle: Text(car.model ?? ''),
-                  onTap: () {
+                  title: Text(car.carName ?? ''),
+                  subtitle: Text(car.category ?? ''),
+                  trailing: Text(
+                    car.presPerDay.toString(),
+                    style: TextStyle(
+                      color: AppColors.successColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onTap: () async {
+                    final CarModel carModel =
+                        await searchCubit.getCarDetails(car.carId ?? 0)
+                            as CarModel;
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => CarDetailsPage(car: car),
+                        builder: (context) => BlocProvider(
+                          create: (context) {
+                            final cubit = sl<CarDeteailDartCubit>();
+                            cubit.fetchReviews(car.carId!);
+                            return cubit;
+                          },
+                          child: CarDetailsPage(car: carModel),
+                        ),
                       ),
                     );
                   },

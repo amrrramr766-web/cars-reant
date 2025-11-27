@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:hive/hive.dart';
 
 class CarModel extends Equatable {
   int? carID;
@@ -49,20 +48,20 @@ class CarModel extends Equatable {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['carID'] = this.carID;
-    data['brand'] = this.brand;
-    data['model'] = this.model;
-    data['year'] = this.year;
-    data['imageUrl'] = this.imageUrl;
-    data['plateNumber'] = this.plateNumber;
-    data['gear'] = this.gear;
-    data['gas'] = this.gas;
-    data['pricePerDay'] = this.pricePerDay;
-    data['seat'] = this.seat;
-    data['isAvailable'] = this.isAvailable;
-    data['isFave'] = this.isFave;
-    data['createdAt'] = this.createdAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['carID'] = carID;
+    data['brand'] = brand;
+    data['model'] = model;
+    data['year'] = year;
+    data['imageUrl'] = imageUrl;
+    data['plateNumber'] = plateNumber;
+    data['gear'] = gear;
+    data['gas'] = gas;
+    data['pricePerDay'] = pricePerDay;
+    data['seat'] = seat;
+    data['isAvailable'] = isAvailable;
+    data['isFave'] = isFave;
+    data['createdAt'] = createdAt;
     return data;
   }
 

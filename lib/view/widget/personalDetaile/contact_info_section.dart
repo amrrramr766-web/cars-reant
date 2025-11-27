@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:car_rent/core/constant/app_colors.dart';
 
 class ContactInfoSection extends StatelessWidget {
   final TextEditingController fullNameController;
@@ -32,7 +33,7 @@ class ContactInfoSection extends StatelessWidget {
           readOnly: true,
           decoration: inputDecoration.copyWith(
             labelText: "Email Address",
-            suffixIcon: const Icon(Icons.lock_outline, color: Colors.grey),
+            suffixIcon: const Icon(Icons.lock_outline, color: AppColors.grey),
           ),
         ),
         const SizedBox(height: 16),

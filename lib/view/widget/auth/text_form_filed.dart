@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:car_rent/core/constant/app_colors.dart';
 
 class TextFormFieldWidget extends StatelessWidget {
   final String? hintText;
@@ -17,7 +18,7 @@ class TextFormFieldWidget extends StatelessWidget {
     this.keyboardType,
     this.validator,
     required this.controller,
-    this.textColor = Colors.black,
+    this.textColor = AppColors.black,
   });
 
   @override

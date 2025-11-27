@@ -45,6 +45,41 @@ class AppColors {
   static const Color disabledColor = Color(0xFFD1D5DB);
   static const Color disabledBackground = Color(0xFFF9FAFB);
 
+  // Additional Colors
+  static const Color transparent = Colors.transparent;
+  static const Color grey = Colors.grey;
+  static const Color red = Colors.red;
+  static const Color blueAccent = Colors.blueAccent;
+  static const Color blueGrey = Colors.blueGrey;
+
+  // Specific Shades
+  static final Color red100 = Colors.red.shade100;
+  static final Color red600 = Colors.red.shade600;
+  static final Color red700 = Colors.red.shade700;
+  static final Color green700 = Colors.green.shade700;
+  static final Color grey700 = Colors.grey.shade700;
+  static final Color blue700 = Colors.blue.shade700;
+  static final Color blue100 = Colors.blue.shade100;
+  static final Color blueGrey50 = Colors.blueGrey.shade50;
+  static final Color deepPurpleAccent400 = Colors.deepPurpleAccent.shade400;
+  static const Color deepPurple = Colors.deepPurple;
+  static final Color deepPurple900 = Colors.deepPurple.shade900;
+  static final Color deepPurple200 = Colors.deepPurple.shade200;
+  static final Color deepPurple50 = Colors.deepPurple.shade50;
+  static final Color grey300 = Colors.grey.shade300;
+  static final Color grey400 = Colors.grey.shade400;
+  static const Color black12 = Colors.black12;
+  static const Color amber = Colors.amber;
+  static const Color primaryBlue = Color(0xFF0B95DA);
+  static const Color greySecondary = Color(0xFF6C757D);
+  static const Color backgroundDark = Color(0xFF101C22);
+  static const Color backgroundLightAlt = Color(0xFFF5F7F8);
+
+  // Custom Colors
+  static const Color darkPurple = Color(
+    0xFF0F0127,
+  ); // Used in car item card button
+
   // Gradients
   static const LinearGradient primaryGradient = LinearGradient(
     colors: [primaryColor, primaryDark],

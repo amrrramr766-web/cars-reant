@@ -1,8 +1,10 @@
 import 'package:car_rent/controller/bookin_cubit/cubit/booking_cubit.dart';
 import 'package:car_rent/controller/car_delteal/cubit/car_deteail_dart_cubit.dart';
 import 'package:car_rent/controller/cars/cubit/cars_cubit.dart';
+import 'package:car_rent/controller/fave/cubit/fave_cubit.dart';
 import 'package:car_rent/data/data_source/remote/booking/booking_data.dart';
 import 'package:car_rent/data/data_source/remote/car/car_data.dart';
+import 'package:car_rent/data/data_source/remote/fave/fave_data.dart';
 import 'package:car_rent/data/data_source/remote/home/home.dart';
 import 'package:car_rent/data/data_source/remote/reviwe/reviwe.dart';
 import 'package:get_it/get_it.dart';
@@ -19,10 +21,12 @@ void initServiceLocator() {
   sl.registerLazySingleton<ReviweData>(() => ReviweData(sl()));
   sl.registerLazySingleton<BookingData>(() => BookingData(sl()));
   sl.registerLazySingleton<CarData>(() => CarData(sl()));
+  sl.registerLazySingleton<FaveData>(() => FaveData(sl()));
 
   // Cubits
   sl.registerFactory<HomeCubit>(() => HomeCubit(sl()));
   sl.registerFactory<CarsCubit>(() => CarsCubit(sl()));
+  sl.registerFactory<FaveCubit>(() => FaveCubit(sl()));
   sl.registerFactory<CarDeteailDartCubit>(
     () => CarDeteailDartCubit(sl<ReviweData>()),
   );

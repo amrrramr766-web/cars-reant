@@ -1,6 +1,7 @@
 import 'package:car_rent/controller/car_delteal/cubit/car_deteail_dart_cubit.dart';
 import 'package:car_rent/data/model/car_model.dart';
 import 'package:car_rent/server_locator.dart';
+import 'package:car_rent/core/constant/app_colors.dart';
 import 'package:car_rent/view/pages/car_delteal/car_delteal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,11 +27,11 @@ class CarListCard extends StatelessWidget {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.white,
                   borderRadius: BorderRadius.circular(10.r),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.3),
+                      color: AppColors.grey.withOpacity(0.3),
                       blurRadius: 8,
                       offset: const Offset(0, 4),
                     ),
@@ -57,7 +58,7 @@ class CarListCard extends StatelessWidget {
                           Text(
                             car.brand!,
                             style: TextStyle(
-                              color: Colors.black,
+                              color: AppColors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: 16.sp,
                             ),
@@ -65,7 +66,7 @@ class CarListCard extends StatelessWidget {
                           Text(
                             '\$${car.pricePerDay}/day',
                             style: TextStyle(
-                              color: Colors.deepPurple,
+                              color: AppColors.deepPurple,
                               fontWeight: FontWeight.bold,
                               fontSize: 14.sp,
                             ),
@@ -77,7 +78,7 @@ class CarListCard extends StatelessWidget {
                         '${car.model} • ${car.year} • ${car.gear} • ${car.gas}',
                         style: TextStyle(
                           fontSize: 12.sp,
-                          color: Colors.grey[700],
+                          color: AppColors.grey700,
                         ),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
@@ -89,8 +90,8 @@ class CarListCard extends StatelessWidget {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: car.isAvailable!
-                                ? Colors.blueGrey.shade50
-                                : Colors.grey,
+                                ? AppColors.blueGrey50
+                                : AppColors.grey,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.r),
                             ),
@@ -118,7 +119,7 @@ class CarListCard extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.bold,
-                              color: Colors.blueAccent,
+                              color: AppColors.blueAccent,
                             ),
                           ),
                         ),
@@ -131,14 +132,14 @@ class CarListCard extends StatelessWidget {
                 Positioned.fill(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.5),
+                      color: AppColors.blackWithOpacity(0.5),
                       borderRadius: BorderRadius.circular(10.r),
                     ),
                     child: const Center(
                       child: Text(
                         "Not Available",
                         style: TextStyle(
-                          color: Colors.white,
+                          color: AppColors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:car_rent/core/constant/app_colors.dart';
 
 class UserProfileHeader extends StatelessWidget {
   final String userName;
@@ -35,7 +36,7 @@ class UserProfileHeader extends StatelessWidget {
           style: TextStyle(
             fontSize: 22.sp,
             fontWeight: FontWeight.bold,
-            color: Colors.blue.shade700,
+            color: AppColors.secondaryColor,
           ),
         ),
         SizedBox(height: 6.h),
@@ -43,11 +44,11 @@ class UserProfileHeader extends StatelessWidget {
         // البريد الإلكتروني
         Text(
           userEmail ?? "No email available",
-          style: TextStyle(fontSize: 16.sp, color: Colors.blueGrey),
+          style: TextStyle(fontSize: 16.sp, color: AppColors.blueGrey),
         ),
         SizedBox(height: 16.h),
 
-        Divider(color: Colors.blue.shade100, thickness: 1.h),
+        Divider(color: AppColors.blue100, thickness: 1.h),
       ],
     );
   }

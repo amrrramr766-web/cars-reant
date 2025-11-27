@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:car_rent/controller/car_delteal/cubit/car_deteail_dart_cubit.dart';
+import 'package:car_rent/core/constant/app_colors.dart';
 
 class CarReviewsSection extends StatelessWidget {
   const CarReviewsSection({super.key});
@@ -13,7 +14,7 @@ class CarReviewsSection extends StatelessWidget {
           return Center(
             child: Text(
               state.message,
-              style: const TextStyle(color: Colors.red),
+              style: const TextStyle(color: AppColors.red),
             ),
           );
         } else if (state is CarDeteailDartLoading) {
@@ -48,7 +49,7 @@ class CarReviewsSection extends StatelessWidget {
                     children: List.generate(5, (i) {
                       return Icon(
                         i < review.stars ? Icons.star : Icons.star_border,
-                        color: Colors.amber,
+                        color: AppColors.amber,
                         size: 16,
                       );
                     }),

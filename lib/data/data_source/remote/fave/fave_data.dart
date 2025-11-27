@@ -1,6 +1,7 @@
 import 'package:car_rent/core/class/crud.dart';
 import 'package:car_rent/core/class/states_request.dart';
 import 'package:car_rent/data/model/FavoriteModel.dart';
+import 'package:car_rent/data/model/favor_cars_model.dart';
 import 'package:car_rent/link_api.dart';
 import 'package:dartz/dartz.dart';
 
@@ -34,6 +35,37 @@ class FaveData {
           return Right(favorites);
         } else {
           print("❌ [FaveData] getFavorites() Response was not a list");
+          return const Left(StatusRequest.failure);
+        }
+      },
+    );
+  }
+
+  Future<Either<StatusRequest, List<FavorCarsModel>>> getFavoritesCars(
+    int userId,
+  ) async {
+    print("🔵 [FaveData] getFavoritesCars() CALLED");
+    print("➡️  Endpoint: ${LinkApi.getFavoritesCars}/$userId");
+
+    var response = await crud.getData("${LinkApi.getFavoritesCars}/$userId");
+
+    print("📥 [Response Raw]: $response");
+
+    return response.fold(
+      (l) {
+        print("❌ [FaveData] getFavoritesCars() FAILED: $l");
+        return Left(l);
+      },
+      (r) {
+        print("✅ [FaveData] getFavoritesCars() SUCCESS");
+        print("📦 [Data]: $r");
+
+        if (r is List) {
+          final favorites = r.map((e) => FavorCarsModel.fromJson(e)).toList();
+          print("🟢 Parsed FavorCarsModel List Count: ${favorites.length}");
+          return Right(favorites);
+        } else {
+          print("❌ [FaveData] getFavoritesCars() Response was not a list");
           return const Left(StatusRequest.failure);
         }
       },

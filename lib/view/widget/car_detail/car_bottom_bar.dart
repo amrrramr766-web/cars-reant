@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:car_rent/data/model/car_model.dart';
+import 'package:car_rent/core/constant/app_colors.dart';
 
 class CarBottomBar extends StatelessWidget {
   final CarModel car;
@@ -19,7 +20,7 @@ class CarBottomBar extends StatelessWidget {
         color: Theme.of(context).scaffoldBackgroundColor,
         boxShadow: [
           BoxShadow(
-            color: Colors.black12,
+            color: AppColors.black12,
             blurRadius: 10,
             offset: const Offset(0, -3),
           ),
@@ -46,7 +47,7 @@ class CarBottomBar extends StatelessWidget {
               );
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.deepPurple,
+              backgroundColor: AppColors.deepPurple,
               padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 14.h),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.r),
@@ -54,7 +55,7 @@ class CarBottomBar extends StatelessWidget {
             ),
             child: Text(
               'Book Now',
-              style: TextStyle(fontSize: 16.sp, color: Colors.white),
+              style: TextStyle(fontSize: 16.sp, color: AppColors.white),
             ),
           ),
         ],

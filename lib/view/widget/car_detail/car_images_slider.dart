@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:car_rent/core/constant/app_colors.dart';
 import 'package:car_rent/controller/fave/cubit/fave_cubit.dart';
 import 'package:car_rent/view/widget/common_wedget/fave_button.dart';
 import 'package:flutter/material.dart';
@@ -23,13 +24,19 @@ class CarImagesSlider extends StatelessWidget {
         expandedHeight: 280.h,
         floating: false,
         pinned: true,
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: AppColors.deepPurple,
         title: const Text('Details'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        actions: [faveButton(userId: userId, carId: car.carID!,isFavorited: car.isFave??false)],
+        actions: [
+          faveButton(
+            userId: userId,
+            carId: car.carID!,
+            isFavorited: car.isFave ?? false,
+          ),
+        ],
         flexibleSpace: FlexibleSpaceBar(
           background: PageView.builder(
             itemCount: images.length,
