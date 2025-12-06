@@ -1,4 +1,5 @@
 import 'package:car_rent/controller/cars/cubit/cars_cubit.dart';
+import 'package:car_rent/controller/theme/cubit/theme_cubit.dart';
 import 'package:car_rent/data/model/car_model.dart';
 import 'package:car_rent/view/widget/cars/car_item_card.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,13 @@ class CarGridView extends StatelessWidget {
             itemCount: filteredCars.length,
             itemBuilder: (context, index) {
               final car = filteredCars[index];
-              return CarItemCard(car: car, userId: userId);
+              return CarItemCard(
+                car: car,
+                userId: userId,
+                isdark:
+                    BlocProvider.of<ThemeCubit>(context).state ==
+                    ThemeMode.dark,
+              );
             },
           );
         }

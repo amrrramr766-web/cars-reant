@@ -1,13 +1,9 @@
-import 'dart:ui';
-
 import 'package:car_rent/controller/auth/login/cubit/login_cubit.dart';
-import 'package:car_rent/controller/fave/cubit/fave_cubit.dart';
 import 'package:car_rent/controller/home/cubit/home_cubit.dart';
 import 'package:car_rent/controller/search/cubit/search_cubit.dart';
-import 'package:car_rent/core/class/crud.dart';
-import 'package:car_rent/core/constant/app_colors.dart';
-import 'package:car_rent/data/data_source/remote/auth/login.dart';
-import 'package:car_rent/data/data_source/remote/search_data.dart';
+import 'package:car_rent/controller/theme/cubit/theme_cubit.dart';
+import 'package:car_rent/controller/fave/cubit/fave_cubit.dart';
+import 'package:car_rent/core/constant/app_theme.dart';
 import 'package:car_rent/server_locator.dart';
 import 'package:car_rent/view/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -25,13 +21,13 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => SearchCubit(SearchData(Crud()))),
+        BlocProvider<SearchCubit>(create: (_) => sl<SearchCubit>()),
         BlocProvider<HomeCubit>(create: (_) => sl<HomeCubit>()..fetchCars()),
         BlocProvider<LoginCubit>(
-          create: (context) =>
-              LoginCubit(LoginData(Crud()))..loadUserFromPrefs(),
+          create: (_) => sl<LoginCubit>()..loadUserFromPrefs(),
         ),
-        BlocProvider<FaveCubit>(create: (context) => sl<FaveCubit>()),
+        BlocProvider<ThemeCubit>(create: (_) => sl<ThemeCubit>()..loadTheme()),
+        BlocProvider<FaveCubit>(create: (_) => sl<FaveCubit>()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
@@ -48,57 +44,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Locale deviceLocale = PlatformDispatcher.instance.locale;
+    return BlocBuilder<ThemeCubit, ThemeMode>(
+      builder: (context, state) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'car rent',
+        themeMode: state,
+        theme: AppTheme.light,
+        darkTheme: AppTheme.dark,
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'car rent',
-      theme: ThemeData(
-        useMaterial3: true,
-        brightness: Brightness.light,
-        primaryColor: AppColors.primaryColor,
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: AppColors.textPrimary,
-          ),
-          bodyMedium: TextStyle(fontSize: 16, color: AppColors.textSecondary),
-        ),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.primaryColor,
-          primary: AppColors.primaryColor,
-          secondary: AppColors.secondaryColor,
-          error: AppColors.errorColor,
-          surface: AppColors.white,
-          onPrimary: AppColors.white,
-          onSecondary: AppColors.white,
-          onSurface: AppColors.textPrimary,
-        ),
+        supportedLocales: AppLocalizations.supportedLocales,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+
+        home: const SplashScreen(),
+        routes: routes,
       ),
-
-      locale: deviceLocale,
-      localeResolutionCallback: (locale, supportedLocales) {
-        if (locale == null) return const Locale('en');
-
-        for (final supported in supportedLocales) {
-          if (supported.languageCode == locale.languageCode) {
-            return supported;
-          }
-        }
-        return const Locale('en'); // fallback
-      },
-
-      supportedLocales: AppLocalizations.supportedLocales,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-
-      home: const SplashScreen(),
-      routes: routes,
     );
   }
 }

@@ -27,7 +27,7 @@ class UserCubit extends Cubit<UserState> {
       (data) {
         final user = UserModel.fromJson(data);
         print(
-          "✅ [UserCubit] User fetched successfully: ${user.name}, ${user.email}",
+          "✅ [UserCubit] User fetched successfully: ${user.fullName}, ${user.email}",
         );
         emit(UserLoaded(user));
       },

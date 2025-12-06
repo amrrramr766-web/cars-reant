@@ -1,7 +1,9 @@
+import 'package:car_rent/controller/theme/cubit/theme_cubit.dart';
 import 'package:car_rent/core/constant/app_route.dart';
 import 'package:car_rent/data/model/car_model.dart';
 import 'package:car_rent/view/widget/home/car_list_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CarList extends StatelessWidget {
@@ -44,7 +46,10 @@ class CarList extends StatelessWidget {
         ),
 
         // Horizontal list of cars
-        CarListCard(cars: cars),
+        CarListCard(
+          cars: cars,
+          isdark: BlocProvider.of<ThemeCubit>(context).state == ThemeMode.dark,
+        ),
       ],
     );
   }

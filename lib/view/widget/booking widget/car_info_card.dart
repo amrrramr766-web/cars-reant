@@ -27,12 +27,38 @@ class CarInfoCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(16),
-                  child: Image.network(
-                    car.imageUrl!,
-                    width: 170,
-                    height: 140,
-                    fit: BoxFit.cover,
-                  ),
+                  child: (car.imageUrl != null && car.imageUrl!.isNotEmpty)
+                      ? Image.network(
+                          car.imageUrl!,
+                          width: 170,
+                          height: 140,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              Container(
+                                width: 170,
+                                height: 140,
+                                color: Colors.grey[300],
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.directions_car,
+                                    size: 48,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                        )
+                      : Container(
+                          width: 170,
+                          height: 140,
+                          color: Colors.grey[300],
+                          child: const Center(
+                            child: Icon(
+                              Icons.directions_car,
+                              size: 48,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
                 ),
                 const SizedBox(width: 12),
                 Column(

@@ -14,7 +14,16 @@ class CarImagesSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> images = [?car.imageUrl, ?car.imageUrl, ?car.imageUrl];
+    final List<String> images = [
+      car.imageUrl,
+      car.imageUrl,
+      car.imageUrl,
+    ].whereType<String>().where((url) => url.isNotEmpty).toList();
+
+    // If no valid images, use a placeholder
+    if (images.isEmpty) {
+      images.add('https://via.placeholder.com/400x300?text=No+Image');
+    }
 
     return BlocListener<FaveCubit, FaveState>(
       listener: (context, state) {
@@ -40,8 +49,20 @@ class CarImagesSlider extends StatelessWidget {
         flexibleSpace: FlexibleSpaceBar(
           background: PageView.builder(
             itemCount: images.length,
-            itemBuilder: (context, index) =>
-                CachedNetworkImage(imageUrl: images[index], fit: BoxFit.cover),
+            itemBuilder: (context, index) => CachedNetworkImage(
+              imageUrl: images[index],
+              fit: BoxFit.cover,
+              errorWidget: (context, url, error) => Container(
+                color: Colors.grey[300],
+                child: const Center(
+                  child: Icon(
+                    Icons.directions_car,
+                    size: 80,
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
       ),

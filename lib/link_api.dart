@@ -1,6 +1,6 @@
 class LinkApi {
   // static const String baseUrl = "http://0.0.0.0:5267/api";
-  static const String baseUrl = "http://10.0.2.2:5267/api";
+  static const String baseUrl = "http://192.168.1.4:5267/api";
 
   // Users
   static const String login = "$baseUrl/users/login";
@@ -39,10 +39,9 @@ class LinkApi {
 
   // Favorites
   static const String getFavoritesByUser = "$baseUrl/Favorite/GetByUser";
-  static const String addFavorite = "$baseUrl/fave/add";
+  static const String toggleFavorite = "$baseUrl/fave/toggle";
   static const String deleteFavorite = "$baseUrl/fave/remove?faveid=";
-  static const String getFavoritesCars =
-      "$baseUrl/fave/GetUserFavoritesCars?userId=";
+  static const String getFavoritesCars = "$baseUrl/fave/list?userId=";
 }
 
 class ApiErrors {

@@ -22,10 +22,11 @@ class UserProfileHeader extends StatelessWidget {
         Center(
           child: CircleAvatar(
             radius: 45.r,
-            backgroundImage: NetworkImage(
-              userImage ??
-                  'https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png',
-            ),
+            backgroundImage: (userImage != null && userImage!.isNotEmpty)
+                ? NetworkImage(userImage!)
+                : const NetworkImage(
+                    'https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png',
+                  ),
           ),
         ),
         SizedBox(height: 16.h),

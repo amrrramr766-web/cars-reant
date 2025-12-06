@@ -18,7 +18,9 @@ class OfferModel {
       id: json['id'] ?? 0,
       description: json['discreption'] ?? '', // مطابق للمفتاح من API
       persenteg: json['persenteg'] ?? 0,
-      imageUrl: json['imageURL'] ?? '', // ✅ المفتاح الصحيح
+      imageUrl:
+          json['imageUrl'] ??
+          '', // ✅ Fixed: API returns 'imageUrl' not 'imageURL'
       endDate: DateTime.parse(json['endDate']),
     );
   }

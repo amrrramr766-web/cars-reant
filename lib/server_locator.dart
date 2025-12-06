@@ -1,12 +1,17 @@
+import 'package:car_rent/controller/auth/login/cubit/login_cubit.dart';
 import 'package:car_rent/controller/bookin_cubit/cubit/booking_cubit.dart';
 import 'package:car_rent/controller/car_delteal/cubit/car_deteail_dart_cubit.dart';
 import 'package:car_rent/controller/cars/cubit/cars_cubit.dart';
 import 'package:car_rent/controller/fave/cubit/fave_cubit.dart';
+import 'package:car_rent/controller/search/cubit/search_cubit.dart';
+import 'package:car_rent/controller/theme/cubit/theme_cubit.dart';
+import 'package:car_rent/data/data_source/remote/auth/login.dart';
 import 'package:car_rent/data/data_source/remote/booking/booking_data.dart';
 import 'package:car_rent/data/data_source/remote/car/car_data.dart';
 import 'package:car_rent/data/data_source/remote/fave/fave_data.dart';
 import 'package:car_rent/data/data_source/remote/home/home.dart';
 import 'package:car_rent/data/data_source/remote/reviwe/reviwe.dart';
+import 'package:car_rent/data/data_source/remote/search_data.dart';
 import 'package:get_it/get_it.dart';
 import 'package:car_rent/core/class/crud.dart';
 import 'package:car_rent/controller/home/cubit/home_cubit.dart';
@@ -22,13 +27,18 @@ void initServiceLocator() {
   sl.registerLazySingleton<BookingData>(() => BookingData(sl()));
   sl.registerLazySingleton<CarData>(() => CarData(sl()));
   sl.registerLazySingleton<FaveData>(() => FaveData(sl()));
+  sl.registerLazySingleton<SearchData>(() => SearchData(sl()));
+  sl.registerLazySingleton<LoginData>(() => LoginData(sl()));
 
   // Cubits
   sl.registerFactory<HomeCubit>(() => HomeCubit(sl()));
   sl.registerFactory<CarsCubit>(() => CarsCubit(sl()));
   sl.registerFactory<FaveCubit>(() => FaveCubit(sl()));
+  sl.registerFactory<SearchCubit>(() => SearchCubit(sl()));
+  sl.registerFactory<LoginCubit>(() => LoginCubit(sl()));
   sl.registerFactory<CarDeteailDartCubit>(
     () => CarDeteailDartCubit(sl<ReviweData>()),
   );
   sl.registerFactory<BookingCubit>(() => BookingCubit(sl<BookingData>()));
+  sl.registerFactory<ThemeCubit>(() => ThemeCubit());
 }

@@ -1,3 +1,4 @@
+import 'package:car_rent/view/widget/common_wedget/toggole_mode.dart';
 import 'package:flutter/material.dart';
 
 class PreferencesSection extends StatelessWidget {
@@ -20,6 +21,9 @@ class PreferencesSection extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Column(
         children: [
+          const ToggoleMode(),
+          const Divider(height: 0),
+
           SwitchListTile(
             value: pushNotifications,
             onChanged: onPushChanged,

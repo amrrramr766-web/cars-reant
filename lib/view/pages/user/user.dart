@@ -1,4 +1,5 @@
 import 'package:car_rent/view/widget/common/title_section.dart';
+import 'package:car_rent/view/widget/common_wedget/toggole_mode.dart';
 import 'package:car_rent/view/widget/user/account_section.dart';
 import 'package:car_rent/view/widget/user/logout_button.dart';
 import 'package:car_rent/view/widget/user/preferences_section.dart';

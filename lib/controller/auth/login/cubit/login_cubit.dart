@@ -47,12 +47,13 @@ class LoginCubit extends Cubit<LoginState> {
               print('💾 [LoginCubit] Saving user data to SharedPreferences');
               final prefs = await SharedPreferences.getInstance();
               await prefs.setInt("userID", data["userID"]);
-              await prefs.setString("name", data["name"]);
-              await prefs.setString("email", data["email"]);
+              await prefs.setString("name", data["fullName"] ?? ""); // <-- use fullName
+              await prefs.setString("email", data["email"] ?? "");
               await prefs.setString("step", "2");
               print('✅ [LoginCubit] User data saved successfully');
-              emit(LoginSuccess(data["userID"], data["name"], data["email"]));
-            } else {
+              emit(LoginSuccess(data["userID"], data["fullName"] ?? "", data["email"] ?? ""));
+            }
+            else {
               print('❌ [LoginCubit] Invalid response: userID is null');
               emit(LoginFailure("الاستجابة من الخادم غير صالحة"));
             }

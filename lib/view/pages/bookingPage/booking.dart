@@ -76,12 +76,38 @@ class _BookingReviewPageState extends State<BookingReviewPage> {
                       borderRadius: const BorderRadius.vertical(
                         top: Radius.circular(16),
                       ),
-                      child: Image.network(
-                        widget.car.imageUrl!,
-                        height: 180,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
+                      child:
+                          (widget.car.imageUrl != null &&
+                              widget.car.imageUrl!.isNotEmpty)
+                          ? Image.network(
+                              widget.car.imageUrl!,
+                              height: 180,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Container(
+                                    height: 180,
+                                    color: Colors.grey[300],
+                                    child: const Center(
+                                      child: Icon(
+                                        Icons.directions_car,
+                                        size: 48,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                            )
+                          : Container(
+                              height: 180,
+                              color: Colors.grey[300],
+                              child: const Center(
+                                child: Icon(
+                                  Icons.directions_car,
+                                  size: 48,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
                     ),
                     Padding(
                       padding: EdgeInsets.all(12.w),

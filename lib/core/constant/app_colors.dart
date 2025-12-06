@@ -25,15 +25,60 @@ class AppColors {
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF000000);
 
-  // Background Colors
+  // Background Colors (Light Mode)
   static const Color backgroundLight = Color(0xFFF5F5F7);
   static const Color backgroundLighter = Color(0xFFFAFAFA);
   static const Color surfaceLight = Color(0xFFEEEEF0);
 
-  // Border & Divider Colors
+  // Border & Divider Colors (Light Mode)
   static const Color borderColor = Color(0xFFE5E7EB);
   static const Color dividerColor = Color(0xFFD1D5DB);
   static const Color borderLight = Color(0xFFF3F4F6);
+
+  // Dark Mode Colors
+  static const Color backgroundDarkPrimary = Color.fromARGB(
+    255,
+    16,
+    25,
+    33,
+  ); // Deep navy blue
+  static const Color backgroundDarkSecondary = Color.fromARGB(
+    255,
+    15,
+    27,
+    61,
+  ); // Slightly lighter navy
+  static const Color surfaceDark = Color.fromARGB(
+    255,
+    30,
+    40,
+    75,
+  ); // Card/surface color
+  static const Color surfaceDarkElevated = Color.fromARGB(
+    255,
+    37,
+    45,
+    82,
+  ); // Elevated surfaces
+
+  // Dark Mode Text Colors
+  static const Color textDarkPrimary = Color.fromARGB(
+    255,
+    232,
+    234,
+    237,
+  ); // Soft white
+  static const Color textDarkSecondary = Color(0xFFB8BFCC); // Muted grey-blue
+  static const Color textDarkHint = Color(0xFF6B7280); // Subtle hint text
+
+  // Dark Mode Border & Divider Colors
+  static const Color borderDark = Color(0xFF2D3654); // Subtle border
+  static const Color dividerDark = Color(0xFF1F2740); // Divider line
+
+  // Dark Mode Accent Colors (Vibrant but not harsh)
+  static const Color accentBlueDark = Color(0xFF4A9EFF); // Bright blue
+  static const Color accentPurpleDark = Color(0xFF9D7FFF); // Soft purple
+  static const Color accentTealDark = Color(0xFF4DD4AC); // Teal accent
 
   // State Colors
   static const Color successColor = Color(0xFF10B981);

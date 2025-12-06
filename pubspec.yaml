@@ -46,6 +46,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   bloc_test: ^10.0.0        # <-- تم نقله هنا
+  mocktail: ^1.0.0          # For creating mocks in tests
   build_runner: ^2.4.6
   hive_generator: ^2.0.0
 

@@ -45,9 +45,9 @@ class FaveData {
     int userId,
   ) async {
     print("🔵 [FaveData] getFavoritesCars() CALLED");
-    print("➡️  Endpoint: ${LinkApi.getFavoritesCars}/$userId");
+    print("➡️  Endpoint: ${LinkApi.getFavoritesCars}$userId");
 
-    var response = await crud.getData("${LinkApi.getFavoritesCars}/$userId");
+    var response = await crud.getData("${LinkApi.getFavoritesCars}$userId");
 
     print("📥 [Response Raw]: $response");
 
@@ -73,18 +73,18 @@ class FaveData {
   }
 
   // ------------------------- ADD FAVORITE --------------------------
-  Future<Either<StatusRequest, dynamic>> addFavorite(
+  Future<Either<StatusRequest, dynamic>> toggleFavorite(
     int userId,
     int carId,
   ) async {
-    print("🔵 [FaveData] addFavorite() CALLED");
-    print("➡️ Endpoint: ${LinkApi.addFavorite}");
+    print("🔵 [FaveData] toggleFavorite() CALLED");
+    print("➡️ Endpoint: ${LinkApi.toggleFavorite}");
     print("📤 Body: { userID: $userId, itemID: $carId }");
 
-    var response = await crud.postData(LinkApi.addFavorite, {
-      "userID": userId,
-      "itemID": carId,
-    });
+    var response = await crud.postData(
+      "${LinkApi.toggleFavorite}?userId=$userId&itemId=$carId",
+      {},
+    );
 
     print("📥 [Response Raw]: $response");
 

@@ -9,8 +9,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CarListCard extends StatelessWidget {
   final List<CarModel> cars;
-
-  const CarListCard({super.key, required this.cars});
+  final bool isdark;
+  const CarListCard({super.key, required this.cars, required this.isdark});
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +27,13 @@ class CarListCard extends StatelessWidget {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  color: AppColors.white,
+                  color: isdark ? AppColors.surfaceDark : AppColors.white,
                   borderRadius: BorderRadius.circular(10.r),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.grey.withOpacity(0.3),
+                      color: isdark
+                          ? AppColors.blackWithOpacity(0.4)
+                          : AppColors.grey.withOpacity(0.3),
                       blurRadius: 8,
                       offset: const Offset(0, 4),
                     ),
@@ -44,12 +46,45 @@ class CarListCard extends StatelessWidget {
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10.r),
-                        child: Image.network(
-                          car.imageUrl!,
-                          width: double.infinity,
-                          height: 160.h,
-                          fit: BoxFit.cover,
-                        ),
+                        child:
+                            (car.imageUrl != null && car.imageUrl!.isNotEmpty)
+                            ? Image.network(
+                                car.imageUrl!,
+                                width: double.infinity,
+                                height: 160.h,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Container(
+                                      height: 160.h,
+                                      color: isdark
+                                          ? AppColors.surfaceDarkElevated
+                                          : AppColors.backgroundLighter,
+                                      child: Center(
+                                        child: Icon(
+                                          Icons.directions_car,
+                                          size: 48,
+                                          color: isdark
+                                              ? AppColors.textDarkHint
+                                              : AppColors.textHint,
+                                        ),
+                                      ),
+                                    ),
+                              )
+                            : Container(
+                                height: 160.h,
+                                color: isdark
+                                    ? AppColors.surfaceDarkElevated
+                                    : AppColors.backgroundLighter,
+                                child: Center(
+                                  child: Icon(
+                                    Icons.directions_car,
+                                    size: 48,
+                                    color: isdark
+                                        ? AppColors.textDarkHint
+                                        : AppColors.textHint,
+                                  ),
+                                ),
+                              ),
                       ),
                       SizedBox(height: 8.h),
                       Row(
@@ -58,7 +93,9 @@ class CarListCard extends StatelessWidget {
                           Text(
                             car.brand!,
                             style: TextStyle(
-                              color: AppColors.black,
+                              color: isdark
+                                  ? AppColors.textDarkPrimary
+                                  : AppColors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: 16.sp,
                             ),
@@ -66,7 +103,9 @@ class CarListCard extends StatelessWidget {
                           Text(
                             '\$${car.pricePerDay}/day',
                             style: TextStyle(
-                              color: AppColors.deepPurple,
+                              color: isdark
+                                  ? AppColors.accentTealDark
+                                  : AppColors.deepPurple,
                               fontWeight: FontWeight.bold,
                               fontSize: 14.sp,
                             ),
@@ -78,7 +117,9 @@ class CarListCard extends StatelessWidget {
                         '${car.model} • ${car.year} • ${car.gear} • ${car.gas}',
                         style: TextStyle(
                           fontSize: 12.sp,
-                          color: AppColors.grey700,
+                          color: isdark
+                              ? AppColors.textDarkSecondary
+                              : AppColors.grey700,
                         ),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
@@ -89,14 +130,14 @@ class CarListCard extends StatelessWidget {
                         width: double.infinity,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: car.isAvailable!
-                                ? AppColors.blueGrey50
-                                : AppColors.grey,
+                            backgroundColor: isdark
+                                ? AppColors.accentBlueDark
+                                : AppColors.primaryColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.r),
                             ),
                           ),
-                          onPressed: car.isAvailable!
+                          onPressed: (car.isAvailable ?? false)
                               ? () {
                                   Navigator.push(
                                     context,
@@ -115,11 +156,13 @@ class CarListCard extends StatelessWidget {
                                 }
                               : null,
                           child: Text(
-                            car.isAvailable! ? 'Select Car' : 'Unavailable',
+                            (car.isAvailable ?? false)
+                                ? 'Select Car'
+                                : 'Unavailable',
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.bold,
-                              color: AppColors.blueAccent,
+                              color: AppColors.white,
                             ),
                           ),
                         ),
@@ -128,7 +171,7 @@ class CarListCard extends StatelessWidget {
                   ),
                 ),
               ),
-              if (!car.isAvailable!)
+              if (!(car.isAvailable ?? false))
                 Positioned.fill(
                   child: Container(
                     decoration: BoxDecoration(

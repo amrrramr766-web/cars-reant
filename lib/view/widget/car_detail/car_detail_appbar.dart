@@ -11,12 +11,28 @@ class CarDetailAppBar extends StatelessWidget {
       expandedHeight: 300,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
-        background: Image.network(
-          car.imageUrl!,
-          fit: BoxFit.cover,
-          errorBuilder: (_, __, ___) =>
-              const Center(child: Icon(Icons.image_not_supported, size: 80)),
-        ),
+        background: (car.imageUrl != null && car.imageUrl!.isNotEmpty)
+            ? Image.network(
+                car.imageUrl!,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => const Center(
+                  child: Icon(
+                    Icons.directions_car,
+                    size: 80,
+                    color: Colors.grey,
+                  ),
+                ),
+              )
+            : Container(
+                color: Colors.grey[300],
+                child: const Center(
+                  child: Icon(
+                    Icons.directions_car,
+                    size: 80,
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
       ),
     );
   }

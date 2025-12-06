@@ -66,7 +66,7 @@ class _OfferBannerState extends State<OfferBanner> {
         return false;
       },
       child: SizedBox(
-        height: 160,
+        height: 230,
         child: PageView.builder(
           controller: widget.pageController,
           itemCount: widget.offers.length,
@@ -77,10 +77,13 @@ class _OfferBannerState extends State<OfferBanner> {
               margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                image: DecorationImage(
-                  image: NetworkImage(offer.imageUrl),
-                  fit: BoxFit.cover,
-                ),
+                color: AppColors.greyShades[300],
+                image: (offer.imageUrl.isNotEmpty)
+                    ? DecorationImage(
+                        image: NetworkImage(offer.imageUrl),
+                        fit: BoxFit.cover,
+                      )
+                    : null,
               ),
               child: Container(
                 decoration: BoxDecoration(

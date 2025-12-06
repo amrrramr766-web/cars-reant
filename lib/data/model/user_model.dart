@@ -1,19 +1,17 @@
 class UserModel {
   int? userID;
-  String? name;
+  String? fullName;
   String? email;
-  String? password;
   String? phone;
   int? role;
   bool? isActive;
   String? createdAt;
-  License? license;
+  License? license; // single license (first from list)
 
   UserModel({
     this.userID,
-    this.name,
+    this.fullName,
     this.email,
-    this.password,
     this.phone,
     this.role,
     this.isActive,
@@ -23,64 +21,61 @@ class UserModel {
 
   UserModel.fromJson(Map<String, dynamic> json) {
     userID = json['userID'];
-    name = json['name'];
+    fullName = json['fullName']; // 🔥 FIXED
     email = json['email'];
-    password = json['password'];
     phone = json['phone'];
     role = json['role'];
     isActive = json['isActive'];
     createdAt = json['createdAt'];
-    license = json['license'] != null
-        ? License.fromJson(json['license'])
-        : null;
+
+    // backend sends: licenses: [ { ... }, { ... } ]
+    if (json['licenses'] != null &&
+        json['licenses'] is List &&
+        json['licenses'].isNotEmpty) {
+      license = License.fromJson(json['licenses'][0]);
+    } else {
+      license = null;
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['userID'] = userID;
-    data['name'] = name;
+    data['fullName'] = fullName;
     data['email'] = email;
-    data['password'] = password;
     data['phone'] = phone;
     data['role'] = role;
     data['isActive'] = isActive;
     data['createdAt'] = createdAt;
+
     if (license != null) {
       data['license'] = license!.toJson();
     }
+
     return data;
   }
 }
 
 class License {
-  int? licenseID;
-  int? userID;
+  int? id;
   String? licenseNumber;
   String? expiryDate;
   String? address;
 
-  License({
-    this.licenseID,
-    this.userID,
-    this.licenseNumber,
-    this.expiryDate,
-    this.address,
-  });
+  License({this.id, this.licenseNumber, this.expiryDate, this.address});
 
   License.fromJson(Map<String, dynamic> json) {
-    licenseID = json['licenseID'];
-    userID = json['userID'];
-    licenseNumber = json['licenseNumber'];
-    expiryDate = json['expiryDate'];
+    id = json['id']; // 🔥 FIXED
+    licenseNumber = json['licenseNumber']; // 🔥 matches backend
+    expiryDate = json['exp_date']; // 🔥 FIXED
     address = json['address'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['licenseID'] = licenseID;
-    data['userID'] = userID;
+    data['id'] = id;
     data['licenseNumber'] = licenseNumber;
-    data['expiryDate'] = expiryDate;
+    data['exp_date'] = expiryDate;
     data['address'] = address;
     return data;
   }

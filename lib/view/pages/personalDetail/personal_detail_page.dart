@@ -47,7 +47,7 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
       listener: (context, state) {
         if (state is UserLoaded) {
           final user = state.user;
-          _fullNameController.text = user.name ?? '';
+          _fullNameController.text = user.fullName ?? '';
           _emailController.text = user.email ?? '';
           _phoneController.text = user.phone ?? '';
           _licenseNumberController.text = user.license?.licenseNumber ?? '';

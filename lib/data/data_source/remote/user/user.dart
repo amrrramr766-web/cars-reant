@@ -8,7 +8,7 @@ class UserData {
   UserData(this.crud);
   // Fetch user info by ID
   Future<Either<StatusRequest, dynamic>> fetchUserInfo(int id) async {
-    final response = await crud.getData('${LinkApi.userLicense}$id/license');
+    final response = await crud.getData('${LinkApi.userinfo}$id');
     print("UserData fetchUserInfo response: $response"); // Debug print
     print("'${LinkApi.userinfo}$id'"); // Debug print
 
