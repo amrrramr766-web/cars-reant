@@ -1,13 +1,13 @@
-import 'package:car_rent/controller/cars/cubit/cars_cubit.dart';
+import 'package:car_rent/Presentation%20Layer/controller/cars/cubit/cars_cubit.dart';
 import 'package:car_rent/core/constant/app_route.dart';
-import 'package:car_rent/data/model/car_model.dart';
+import 'package:car_rent/Data%20Layer/model/car_model.dart';
 import 'package:car_rent/server_locator.dart';
-import 'package:car_rent/view/pages/auth/login.dart';
-import 'package:car_rent/view/pages/auth/regster.dart';
-import 'package:car_rent/view/pages/car_delteal/car_delteal.dart';
-import 'package:car_rent/view/pages/cars/brawes_cars.dart';
-import 'package:car_rent/view/pages/home/home.dart';
-import 'package:car_rent/view/pages/onBording/on_bording_screen.dart';
+import 'package:car_rent/Presentation%20Layer/pages/auth/login.dart';
+import 'package:car_rent/Presentation%20Layer/pages/auth/regster.dart';
+import 'package:car_rent/Presentation%20Layer/pages/car_delteal/car_delteal.dart';
+import 'package:car_rent/Presentation%20Layer/pages/cars/brawes_cars.dart';
+import 'package:car_rent/Presentation%20Layer/pages/home/home.dart';
+import 'package:car_rent/Presentation%20Layer/pages/onBording/on_bording_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

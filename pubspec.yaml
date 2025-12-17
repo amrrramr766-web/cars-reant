@@ -40,6 +40,8 @@ dependencies:
   cached_network_image: ^3.4.1
   material_symbols_icons: ^4.2874.0
   google_nav_bar: ^5.0.7
+  freezed: ^2.5.2
+  freezed_annotation: ^2.4.4
 
 dev_dependencies:
   flutter_lints: ^5.0.0
@@ -47,8 +49,9 @@ dev_dependencies:
     sdk: flutter
   bloc_test: ^10.0.0        # <-- تم نقله هنا
   mocktail: ^1.0.0          # For creating mocks in tests
-  build_runner: ^2.4.6
+  build_runner: ^2.4.13
   hive_generator: ^2.0.0
+  json_serializable: ^6.8.0
 
 flutter:
   uses-material-design: true

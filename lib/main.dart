@@ -1,11 +1,12 @@
-import 'package:car_rent/controller/auth/login/cubit/login_cubit.dart';
-import 'package:car_rent/controller/home/cubit/home_cubit.dart';
-import 'package:car_rent/controller/search/cubit/search_cubit.dart';
-import 'package:car_rent/controller/theme/cubit/theme_cubit.dart';
-import 'package:car_rent/controller/fave/cubit/fave_cubit.dart';
+import 'package:car_rent/Data%20Layer/Local%20Data%20Sources/auth_local_data_source.dart';
+import 'package:car_rent/Presentation%20Layer/controller/auth/login/cubit/login_cubit.dart';
+import 'package:car_rent/Presentation%20Layer/controller/home/cubit/home_cubit.dart';
+import 'package:car_rent/Presentation%20Layer/controller/search/cubit/search_cubit.dart';
+import 'package:car_rent/Presentation%20Layer/controller/theme/cubit/theme_cubit.dart';
+import 'package:car_rent/Presentation%20Layer/controller/fave/cubit/fave_cubit.dart';
 import 'package:car_rent/core/constant/app_theme.dart';
 import 'package:car_rent/server_locator.dart';
-import 'package:car_rent/view/splash_screen.dart';
+import 'package:car_rent/Presentation%20Layer/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,16 +17,14 @@ import 'package:car_rent/routes.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  initServiceLocator();
+  await initServiceLocator();
 
   runApp(
     MultiBlocProvider(
       providers: [
         BlocProvider<SearchCubit>(create: (_) => sl<SearchCubit>()),
-        BlocProvider<HomeCubit>(create: (_) => sl<HomeCubit>()..fetchCars()),
-        BlocProvider<LoginCubit>(
-          create: (_) => sl<LoginCubit>()..loadUserFromPrefs(),
-        ),
+        BlocProvider<HomeCubit>(create: (_) => sl<HomeCubit>()),
+        BlocProvider<LoginCubit>(create: (_) => sl<LoginCubit>()),
         BlocProvider<ThemeCubit>(create: (_) => sl<ThemeCubit>()..loadTheme()),
         BlocProvider<FaveCubit>(create: (_) => sl<FaveCubit>()),
       ],
@@ -60,7 +59,7 @@ class MyApp extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
 
-        home: const SplashScreen(),
+        home: SplashScreen(authLocalDataSource: sl<AuthLocalDataSource>()),
         routes: routes,
       ),
     );

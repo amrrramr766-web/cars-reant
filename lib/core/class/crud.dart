@@ -1,33 +1,53 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:car_rent/core/class/icrud.dart';
 import 'package:car_rent/core/class/states_request.dart';
 import 'package:car_rent/core/functions/check_internet.dart';
 import 'package:dartz/dartz.dart';
 import 'package:http/io_client.dart';
 
-class Crud {
-  Future<Either<StatusRequest, Map>> postData(
+class Crud implements IHttpGet, IHttpPost {
+  @override
+  Future<Either<StatusRequest, dynamic>> postData(
     String linkurl,
-    Map<String, dynamic> data, // Map بدلاً من String
+    Map<String, dynamic> data,
   ) async {
-    HttpClient httpClient = HttpClient()
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-    IOClient ioClient = IOClient(httpClient);
+    if (await checkInternet()) {
+      try {
+        print('📤 [Crud] Sending POST request to: $linkurl');
+        print('📦 [Crud] Request body: ${jsonEncode(data)}');
 
-    var response = await ioClient.post(
-      Uri.parse(linkurl),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(data), // JSON
-    );
+        HttpClient httpClient = HttpClient()
+          ..badCertificateCallback =
+              (X509Certificate cert, String host, int port) => true;
+        IOClient ioClient = IOClient(httpClient);
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      return Right(jsonDecode(response.body));
+        var response = await ioClient.post(
+          Uri.parse(linkurl),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode(data),
+        );
+
+        print('📥 [Crud] Response status: ${response.statusCode}');
+        print('📥 [Crud] Response body: ${response.body}');
+
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          return Right(jsonDecode(response.body));
+        } else {
+          print('❌ [Crud] Server returned error: ${response.statusCode}');
+          return const Left(StatusRequest.serverfailure);
+        }
+      } catch (e) {
+        print("💥 [Crud] Exception in postData: $e");
+        return const Left(StatusRequest.serverfailure);
+      }
     } else {
-      return const Left(StatusRequest.serverfailure);
+      print("📵 [Crud] No internet connection");
+      return const Left(StatusRequest.offlinefailure);
     }
   }
 
+  @override
   Future<Either<StatusRequest, dynamic>> getData(String linkurl) async {
     if (await checkInternet()) {
       try {
@@ -45,7 +65,7 @@ class Crud {
 
         if (response.statusCode == 200 || response.statusCode == 201) {
           final responsebody = jsonDecode(response.body);
-          return Right(responsebody); // ممكن يبقى Map أو List
+          return Right(responsebody);
         } else {
           return const Left(StatusRequest.serverfailure);
         }

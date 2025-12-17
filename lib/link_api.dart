@@ -1,10 +1,10 @@
 class LinkApi {
   // static const String baseUrl = "http://0.0.0.0:5267/api";
-  static const String baseUrl = "http://192.168.1.4:5267/api";
+  static const String baseUrl = "http://192.168.1.8:5267/api";
 
   // Users
-  static const String login = "$baseUrl/users/login";
-  static const String register = "$baseUrl/users/register";
+  static const String login = "$baseUrl/users/Login";
+  static const String register = "$baseUrl/users/Register";
   static const String userinfo = "$baseUrl/users/"; // GET + id => Get user info
   static const String userLicense =
       "$baseUrl/users/"; // GET + id => Get user license info
