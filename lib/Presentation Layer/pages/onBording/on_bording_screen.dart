@@ -1,7 +1,7 @@
-import 'package:car_rent/Presentation%20Layer/controller/onBording/cubit/on_bording_cubit.dart';
-import 'package:car_rent/Data%20Layer/Local%20Data%20Sources/onBoardingModel.dart';
-import 'package:car_rent/Presentation%20Layer/widget/ong_bording/list_index.dart';
-import 'package:car_rent/Presentation%20Layer/widget/ong_bording/on_bording_main.dart';
+import 'package:car_rent/Presentation%20Layer/pages/onBording/cubit/cubit/on_bording_cubit.dart';
+import 'package:car_rent/data/Data%20Layer/Local%20Data%20Sources/on_boarding_model.dart';
+import 'package:car_rent/Presentation%20Layer/pages/onBording/widget/list_index.dart';
+import 'package:car_rent/Presentation%20Layer/pages/onBording/widget/on_bording_main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

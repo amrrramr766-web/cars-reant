@@ -1,7 +1,7 @@
 // browse_cars.dart
-import 'package:car_rent/Presentation%20Layer/controller/cars/cubit/cars_cubit.dart';
-import 'package:car_rent/Presentation%20Layer/widget/cars/car_grid_view.dart';
-import 'package:car_rent/Presentation%20Layer/widget/cars/car_type_filter_chips.dart';
+import 'package:car_rent/Presentation%20Layer/pages/cars/cubit/cubit/cars_cubit.dart';
+import 'package:car_rent/Presentation%20Layer/pages/cars/widget/car_grid_view.dart';
+import 'package:car_rent/Presentation%20Layer/pages/cars/widget/car_type_filter_chips.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

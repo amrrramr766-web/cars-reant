@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 
 /// License Entity - Pure business object without JSON dependencies
-class License extends Equatable {
+class LicenseEntity extends Equatable {
   final int id;
   final String licenseNumber;
   final DateTime expiryDate;
   final String address;
 
-  const License({
+  const LicenseEntity({
     required this.id,
     required this.licenseNumber,
     required this.expiryDate,

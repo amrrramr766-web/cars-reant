@@ -12,4 +12,10 @@ abstract class IHttpPost {
   );
 }
 
-abstract class ICrud extends IHttpGet implements IHttpPost {}
+abstract class ICrud {
+  Future<Either<StatusRequest, dynamic>> getData(String url);
+  Future<Either<StatusRequest, dynamic>> postData(
+    String url,
+    Map<String, dynamic> body,
+  );
+}

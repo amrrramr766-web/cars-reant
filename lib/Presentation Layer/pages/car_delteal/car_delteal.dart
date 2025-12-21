@@ -1,12 +1,12 @@
-import 'package:car_rent/Data%20Layer/repositories/favorites_repository.dart';
-import 'package:car_rent/Presentation%20Layer/controller/fave/cubit/fave_cubit.dart';
-import 'package:car_rent/Data%20Layer/model/car_model.dart';
-import 'package:car_rent/Presentation%20Layer/widget/car_detail/car_bottom_bar.dart';
-import 'package:car_rent/Presentation%20Layer/widget/car_detail/car_features.dart';
-import 'package:car_rent/Presentation%20Layer/widget/car_detail/car_images_slider.dart';
-import 'package:car_rent/Presentation%20Layer/widget/car_detail/car_location.dart';
-import 'package:car_rent/Presentation%20Layer/widget/car_detail/car_reviews_section.dart';
-import 'package:car_rent/Presentation%20Layer/widget/car_detail/car_specifications.dart';
+import 'package:car_rent/data/Data%20Layer/repositories/favorites_repository.dart';
+import 'package:car_rent/Domain%20Layer/Entities/car_entity.dart';
+import 'package:car_rent/Presentation%20Layer/pages/Favorites/cubit/cubit/fave_cubit.dart';
+import 'package:car_rent/Presentation%20Layer/pages/car_delteal/wid%20get/car_bottom_bar.dart';
+import 'package:car_rent/Presentation%20Layer/pages/car_delteal/wid%20get/car_features.dart';
+import 'package:car_rent/Presentation%20Layer/pages/car_delteal/wid%20get/car_images_slider.dart';
+import 'package:car_rent/Presentation%20Layer/pages/car_delteal/wid%20get/car_location.dart';
+import 'package:car_rent/Presentation%20Layer/pages/car_delteal/wid%20get/car_reviews_section.dart';
+import 'package:car_rent/Presentation%20Layer/pages/car_delteal/wid%20get/car_specifications.dart';
 import 'package:car_rent/server_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +14,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CarDetailsPage extends StatefulWidget {
-  final CarModel car;
+  final CarEntity car;
   const CarDetailsPage({super.key, required this.car});
 
   @override
@@ -48,7 +48,7 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
         body: SafeArea(
           child: CustomScrollView(
             slivers: [
-              CarImagesSlider(car: widget.car, userId: userId),
+              CarImagesSlider(car: widget.car),
               SliverToBoxAdapter(
                 child: Padding(
                   padding: EdgeInsets.all(16.w),

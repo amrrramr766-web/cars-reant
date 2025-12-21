@@ -1,9 +1,9 @@
-import 'package:car_rent/Presentation%20Layer/controller/cars/cubit/cars_cubit.dart';
+import 'package:car_rent/Domain%20Layer/Entities/car_entity.dart';
+import 'package:car_rent/Presentation%20Layer/pages/cars/cubit/cubit/cars_cubit.dart';
 import 'package:car_rent/core/constant/app_route.dart';
-import 'package:car_rent/Data%20Layer/model/car_model.dart';
 import 'package:car_rent/server_locator.dart';
-import 'package:car_rent/Presentation%20Layer/pages/auth/login.dart';
-import 'package:car_rent/Presentation%20Layer/pages/auth/regster.dart';
+import 'package:car_rent/Presentation%20Layer/pages/auth/pages/login.dart';
+import 'package:car_rent/Presentation%20Layer/pages/auth/pages/regster.dart';
 import 'package:car_rent/Presentation%20Layer/pages/car_delteal/car_delteal.dart';
 import 'package:car_rent/Presentation%20Layer/pages/cars/brawes_cars.dart';
 import 'package:car_rent/Presentation%20Layer/pages/home/home.dart';
@@ -38,7 +38,7 @@ Map<String, Widget Function(BuildContext)> routes = {
   /// 🔥 Car Detail Page مع فحص arguments قبل الاستخدام
   AppRoute.carDetail: (context) {
     final args = ModalRoute.of(context)?.settings.arguments;
-    if (args is CarModel) {
+    if (args is CarEntity) {
       return CarDetailsPage(car: args);
     }
     // Fallback: return error screen if args missing

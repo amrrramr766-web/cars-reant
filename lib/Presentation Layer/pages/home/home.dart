@@ -1,17 +1,16 @@
-import 'package:car_rent/Data%20Layer/Local%20Data%20Sources/auth_local_data_source.dart';
-import 'package:car_rent/Data%20Layer/repositories/booking_repository.dart';
-import 'package:car_rent/Data%20Layer/repositories/car_repository.dart';
-import 'package:car_rent/Data%20Layer/repositories/favorites_repository.dart';
-import 'package:car_rent/Presentation%20Layer/controller/bookin_cubit/cubit/booking_cubit.dart';
-import 'package:car_rent/Presentation%20Layer/controller/fave/cubit/fave_cubit.dart';
+import 'package:car_rent/data/Data%20Layer/repositories/booking_repository.dart';
+import 'package:car_rent/data/Data%20Layer/repositories/car_repository.dart';
+import 'package:car_rent/data/Data%20Layer/repositories/favorites_repository.dart';
+import 'package:car_rent/Presentation%20Layer/pages/booking/cubit/cubit/booking_cubit.dart';
+import 'package:car_rent/Presentation%20Layer/pages/Favorites/cubit/cubit/fave_cubit.dart';
 import 'package:car_rent/Presentation%20Layer/controller/search/cubit/search_cubit.dart';
 
 import 'package:car_rent/Presentation%20Layer/pages/Favorites/favorites_page.dart';
-import 'package:car_rent/Presentation%20Layer/pages/bookingPage/booking_history.dart';
+import 'package:car_rent/Presentation%20Layer/pages/booking/pages/booking_history.dart';
 import 'package:car_rent/Presentation%20Layer/pages/user/user.dart';
 import 'package:car_rent/Presentation%20Layer/widget/common/bottom_navigation_bar.dart';
-import 'package:car_rent/Presentation%20Layer/widget/home/custom_app_bar.dart';
-import 'package:car_rent/Presentation%20Layer/widget/home/home_content.dart';
+import 'package:car_rent/Presentation%20Layer/pages/home/widget/custom_app_bar.dart';
+import 'package:car_rent/Presentation%20Layer/pages/home/widget/home_content.dart';
 import 'package:car_rent/server_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

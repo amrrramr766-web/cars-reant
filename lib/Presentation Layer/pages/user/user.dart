@@ -1,14 +1,13 @@
-import 'package:car_rent/Data%20Layer/Local%20Data%20Sources/auth_local_data_source.dart';
-import 'package:car_rent/Data%20Layer/model/user_model.dart';
+import 'package:car_rent/data/Data%20Layer/Local%20Data%20Sources/auth_local_data_source.dart';
+import 'package:car_rent/data/Data%20Layer/model/user_model.dart';
 import 'package:car_rent/Presentation%20Layer/widget/common/title_section.dart';
-import 'package:car_rent/Presentation%20Layer/widget/user/account_section.dart';
-import 'package:car_rent/Presentation%20Layer/widget/user/logout_button.dart';
-import 'package:car_rent/Presentation%20Layer/widget/user/preferences_section.dart';
-import 'package:car_rent/Presentation%20Layer/widget/user/support_section.dart';
-import 'package:car_rent/Presentation%20Layer/widget/user/user_profile_header.dart';
+import 'package:car_rent/Presentation%20Layer/pages/user/widget/account_section.dart';
+import 'package:car_rent/Presentation%20Layer/pages/user/widget/logout_button.dart';
+import 'package:car_rent/Presentation%20Layer/pages/user/widget/preferences_section.dart';
+import 'package:car_rent/Presentation%20Layer/pages/user/widget/support_section.dart';
+import 'package:car_rent/Presentation%20Layer/pages/user/widget/user_profile_header.dart';
 import 'package:car_rent/server_locator.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileSettingsPage extends StatefulWidget {
   const ProfileSettingsPage({super.key});

@@ -1,6 +1,6 @@
 import 'package:car_rent/Domain%20Layer/Repository%20Interfaces/i_booking_repository.dart';
 import 'package:car_rent/core/constant/erorr.dart';
-import 'package:car_rent/Data%20Layer/model/booking_model.dart';
+import 'package:car_rent/data/Data%20Layer/model/booking_model.dart';
 import 'package:dartz/dartz.dart';
 
 class BookingUseCase {

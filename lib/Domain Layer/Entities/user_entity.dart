@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'license_entity.dart';
 
 /// User Entity - Pure business object without JSON dependencies
-class User extends Equatable {
+class UserEntity extends Equatable {
   final int id;
   final String fullName;
   final String email;
@@ -10,9 +10,9 @@ class User extends Equatable {
   final UserRole role;
   final bool isActive;
   final DateTime createdAt;
-  final License? license;
+  final LicenseEntity? license;
 
-  const User({
+  const UserEntity({
     required this.id,
     required this.fullName,
     required this.email,

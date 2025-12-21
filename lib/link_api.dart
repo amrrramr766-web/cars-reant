@@ -34,14 +34,13 @@ class LinkApi {
   static const String getSuggestions =
       "$baseUrl/car/suggestions/all"; // GET => Get all suggestions
 
-  static const String Search =
+  static const String search =
       "$baseUrl/car/search"; // POST => Send search query
 
   // Favorites
-  static const String getFavoritesByUser = "$baseUrl/Favorite/GetByUser";
+  static const String getFavoritesByUser = "$baseUrl/fave/list?userId=";
   static const String toggleFavorite = "$baseUrl/fave/toggle";
   static const String deleteFavorite = "$baseUrl/fave/remove?faveid=";
-  static const String getFavoritesCars = "$baseUrl/fave/list?userId=";
 }
 
 class ApiErrors {

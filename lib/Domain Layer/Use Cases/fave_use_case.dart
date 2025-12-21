@@ -7,17 +7,10 @@ class FaveUseCase {
 
   FaveUseCase(this.repository);
 
-  Future<Either<Failure, void>> call(int carId, int userId) async {
+  Future<Either<Failure, void>> call(int carId) async {
     // Business logic validation
 
     // Delegate to repository
-    return await repository.toggleFavorite(carId, userId);
-  }
-
-  Future<Either<Failure, void>> toggleFavorite(int carId, int userId) async {
-    // Business logic validation
-
-    // Delegate to repository
-    return await repository.toggleFavorite(carId, userId);
+    return await repository.toggleFavorite(carId);
   }
 }

@@ -1,9 +1,9 @@
-import 'package:car_rent/Data%20Layer/Local%20Data%20Sources/auth_local_data_source.dart';
-import 'package:car_rent/Presentation%20Layer/controller/auth/login/cubit/login_cubit.dart';
-import 'package:car_rent/Presentation%20Layer/controller/home/cubit/home_cubit.dart';
+import 'package:car_rent/data/Data%20Layer/Local%20Data%20Sources/auth_local_data_source.dart';
+import 'package:car_rent/Presentation%20Layer/pages/auth/cubit/login/cubit/login_cubit.dart';
+import 'package:car_rent/Presentation%20Layer/pages/home/cubit/cubit/home_cubit.dart';
 import 'package:car_rent/Presentation%20Layer/controller/search/cubit/search_cubit.dart';
 import 'package:car_rent/Presentation%20Layer/controller/theme/cubit/theme_cubit.dart';
-import 'package:car_rent/Presentation%20Layer/controller/fave/cubit/fave_cubit.dart';
+import 'package:car_rent/Presentation%20Layer/pages/Favorites/cubit/cubit/fave_cubit.dart';
 import 'package:car_rent/core/constant/app_theme.dart';
 import 'package:car_rent/server_locator.dart';
 import 'package:car_rent/Presentation%20Layer/splash_screen.dart';
