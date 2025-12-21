@@ -34,8 +34,6 @@ class _BookingReviewPageState extends State<BookingReviewPage> {
     });
   }
 
- 
-
   void _recalculateDays() {
     if (startDate != null && endDate != null) {
       totalDays = endDate!.difference(startDate!).inDays + 1;
