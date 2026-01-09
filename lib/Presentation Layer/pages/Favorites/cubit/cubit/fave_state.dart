@@ -12,14 +12,6 @@ final class FaveInitial extends FaveState {}
 // ---- Fetch Favorites ----
 final class FaveLoading extends FaveState {}
 
-final class FaveLoaded extends FaveState {
-  final List<CarEntity> favorites;
-  const FaveLoaded({required this.favorites});
-
-  @override
-  List<Object> get props => [favorites];
-}
-
 final class FaveError extends FaveState {
   final String message;
   const FaveError({required this.message});

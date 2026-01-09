@@ -1,12 +1,14 @@
 import 'package:car_rent/Domain%20Layer/Entities/car_entity.dart';
 import 'package:car_rent/core/constant/app_colors.dart';
-import 'package:car_rent/Presentation%20Layer/pages/car_delteal/car_delteal.dart';
+// import 'package:car_rent/Presentation%20Layer/pages/car_delteal/car_delteal.dart'; // Unused
 import 'package:car_rent/Presentation%20Layer/widget/common/fave_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:car_rent/Presentation%20Layer/pages/car_delteal/cubit/cubit/car_deteail_dart_cubit.dart';
-import 'package:car_rent/server_locator.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:car_rent/Presentation%20Layer/pages/car_delteal/cubit/cubit/car_deteail_dart_cubit.dart'; // Unused
+// import 'package:car_rent/server_locator.dart'; // Unused
+// import 'package:flutter_bloc/flutter_bloc.dart'; // Unused
+import 'package:go_router/go_router.dart';
+import 'package:car_rent/core/constant/app_route.dart';
 
 class CarItemCard extends StatelessWidget {
   final CarEntity car;
@@ -77,7 +79,11 @@ class CarItemCard extends StatelessWidget {
                             ),
                           ),
                   ),
-                  faveButton(carId: car.id, isFavorited: car.isFavorite),
+                  faveButton(
+                    carId: car.id,
+                    isDark: isdark,
+                    isFavorited: car.isFavorite,
+                  ),
                 ],
               ),
 
@@ -115,18 +121,9 @@ class CarItemCard extends StatelessWidget {
                   height: 36.h,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BlocProvider(
-                            create: (context) {
-                              final cubit = sl<CarDeteailDartCubit>();
-                              cubit.fetchReviews(car.id);
-                              return cubit;
-                            },
-                            child: CarDetailsPage(car: car),
-                          ),
-                        ),
+                      context.push(
+                        '${AppRoute.carDetail}/${car.id}',
+                        extra: car,
                       );
                     },
                     style: ElevatedButton.styleFrom(

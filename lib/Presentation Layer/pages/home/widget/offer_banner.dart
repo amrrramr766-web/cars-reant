@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:car_rent/Presentation%20Layer/pages/home/widget/offer_card.dart';
 import 'package:car_rent/data/Data%20Layer/model/offer_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class OfferBanner extends StatefulWidget {
   final List<OfferModel> offers;
@@ -21,24 +22,37 @@ class _OfferBannerState extends State<OfferBanner> {
   @override
   void initState() {
     super.initState();
-    _startAutoSlide();
+    _tryStartAutoSlide();
   }
 
-  void _startAutoSlide() {
-    _autoSlideTimer?.cancel();
-    _autoSlideTimer = Timer.periodic(const Duration(seconds: 20), (timer) {
-      if (!_userIsScrolling && _pageController.hasClients) {
-        final currentPage = _pageController.page?.round() ?? 0;
-        final nextPage = currentPage + 1 < widget.offers.length
-            ? currentPage + 1
-            : 0;
+  @override
+  void didUpdateWidget(covariant OfferBanner oldWidget) {
+    super.didUpdateWidget(oldWidget);
 
-        _pageController.animateToPage(
-          nextPage,
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.easeInOut,
-        );
+    if (oldWidget.offers.length != widget.offers.length) {
+      _tryStartAutoSlide();
+    }
+  }
+
+  void _tryStartAutoSlide() {
+    _autoSlideTimer?.cancel();
+
+    // ❗ Do NOT start auto-slide for 0 or 1 item
+    if (widget.offers.length <= 1) return;
+
+    _autoSlideTimer = Timer.periodic(const Duration(seconds: 20), (timer) {
+      if (!mounted || _userIsScrolling || !_pageController.hasClients) {
+        return;
       }
+
+      final currentPage = _pageController.page?.round() ?? 0;
+      final nextPage = (currentPage + 1) % widget.offers.length;
+
+      _pageController.animateToPage(
+        nextPage,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
     });
   }
 
@@ -51,11 +65,17 @@ class _OfferBannerState extends State<OfferBanner> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.offers.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
     return NotificationListener<ScrollNotification>(
       onNotification: (notification) {
         if (notification is ScrollStartNotification) {
           _userIsScrolling = true;
-        } else if (notification is ScrollEndNotification) {
+        } else if (notification is ScrollEndNotification ||
+            notification is UserScrollNotification &&
+                notification.direction == ScrollDirection.idle) {
           _userIsScrolling = false;
         }
         return false;
@@ -66,8 +86,7 @@ class _OfferBannerState extends State<OfferBanner> {
           controller: _pageController,
           itemCount: widget.offers.length,
           itemBuilder: (context, index) {
-            final offer = widget.offers[index];
-            return OfferCard(offer: offer);
+            return OfferCard(offer: widget.offers[index]);
           },
         ),
       ),

@@ -1,3 +1,4 @@
+import 'package:car_rent/Presentation%20Layer/pages/auth/cubit/auth/cubit/auth_cubit.dart';
 import 'package:car_rent/data/Data%20Layer/Local%20Data%20Sources/auth_local_data_source.dart';
 import 'package:car_rent/data/Data%20Layer/model/login_requst.dart';
 import 'package:car_rent/data/Data%20Layer/repositories/auth_repository.dart';
@@ -30,27 +31,12 @@ class LoginCubit extends Cubit<LoginState> {
       (failure) {
         emit(LoginFailure(_mapFailureToMessage(failure)));
       },
-      (user) {
+      (user) async {
+        await _authLocalDataSource.cacheUser(user);
+        await _authLocalDataSource.setUserID(user.userID);
         emit(LoginSuccess(user.userID, user.fullName, user.email));
-        _authLocalDataSource.cacheUser(user);
-        _authLocalDataSource.setStep("2");
-        _authLocalDataSource.setUserID(user.userID);
       },
     );
-  }
-
-  Future<void> loadUserFromPrefs() async {
-    try {
-      final user = await _authLocalDataSource.getUser();
-      emit(LoginSuccess(user.userID, user.fullName, user.email));
-    } catch (_) {
-      emit(LoginInitial());
-    }
-  }
-
-  Future<void> logout() async {
-    await _authLocalDataSource.clearUser();
-    emit(LoginInitial());
   }
 
   String _mapFailureToMessage(Object failure) {

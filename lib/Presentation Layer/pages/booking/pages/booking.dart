@@ -3,7 +3,6 @@ import 'package:car_rent/Presentation%20Layer/pages/booking/widget/booking_botto
 import 'package:car_rent/Presentation%20Layer/pages/booking/widget/booking_review_appbar.dart';
 import 'package:car_rent/Presentation%20Layer/pages/booking/widget/booking_review_body.dart';
 import 'package:car_rent/core/constant/app_colors.dart';
-import 'package:car_rent/Presentation%20Layer/pages/booking/widget/booking_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

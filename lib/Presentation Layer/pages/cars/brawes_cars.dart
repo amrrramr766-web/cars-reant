@@ -1,11 +1,12 @@
 // browse_cars.dart
+import 'package:car_rent/Presentation%20Layer/controller/theme/cubit/theme_cubit.dart';
 import 'package:car_rent/Presentation%20Layer/pages/cars/cubit/cubit/cars_cubit.dart';
 import 'package:car_rent/Presentation%20Layer/pages/cars/widget/car_grid_view.dart';
 import 'package:car_rent/Presentation%20Layer/pages/cars/widget/car_type_filter_chips.dart';
+import 'package:car_rent/core/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class BrowseCars extends StatefulWidget {
   const BrowseCars({super.key});
@@ -16,24 +17,15 @@ class BrowseCars extends StatefulWidget {
 
 class _BrowseCarsState extends State<BrowseCars> {
   String selectedType = "All";
-  int userId = 0;
 
-  Future<void> _refreshCars() async {
-    await context.read<CarsCubit>().fetchCars();
+  Future<void> _refreshCars(int pageNumber, int pageSize) async {
+    await context.read<CarsCubit>().fetchCarsPage(pageNumber);
   }
 
   @override
   void initState() {
     super.initState();
-    _loadUserId();
-    context.read<CarsCubit>().fetchCars();
-  }
-
-  Future<void> _loadUserId() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      userId = prefs.getInt("userID") ?? 0;
-    });
+    context.read<CarsCubit>().fetchCarsPage(1);
   }
 
   @override
@@ -42,26 +34,37 @@ class _BrowseCarsState extends State<BrowseCars> {
       appBar: AppBar(
         title: Text("Cars", style: TextStyle(fontSize: 20.sp)),
         centerTitle: true,
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: context.watch<ThemeCubit>().state == ThemeMode.dark
+            ? AppColors.darkPurple
+            : AppColors.primaryLight,
       ),
-      body: Column(
-        children: [
-          CarTypeFilterChips(
-            selectedType: selectedType,
-            onTypeSelected: (type) {
-              setState(() {
-                selectedType = type;
-              });
-            },
-          ),
-          SizedBox(height: 10.h),
-          Expanded(
-            child: RefreshIndicator(
-              onRefresh: _refreshCars,
-              child: CarGridView(selectedType: selectedType, userId: userId),
+      body: RefreshIndicator(
+        onRefresh: () => _refreshCars(1, 10),
+        child: CustomScrollView(
+          slivers: [
+            /// Filter chips (RenderBox → Sliver)
+            ///
+            SliverToBoxAdapter(
+              child: CarTypeFilterChips(
+                selectedType: selectedType,
+                onTypeSelected: (type) {
+                  setState(() {
+                    selectedType = type;
+                  });
+                },
+                isDark: context.watch<ThemeCubit>().state == ThemeMode.dark,
+              ),
             ),
-          ),
-        ],
+
+            /// Spacing
+            SliverToBoxAdapter(child: SizedBox(height: 10.h)),
+
+            CarGridView(
+              selectedType: selectedType,
+              isDark: context.watch<ThemeCubit>().state == ThemeMode.dark,
+            ),
+          ],
+        ),
       ),
     );
   }

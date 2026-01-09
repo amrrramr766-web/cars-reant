@@ -47,8 +47,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
                     return Center(child: Text(state.message));
                   }
 
-                  if (state is FaveLoaded) {
-                    final favorites = state.favorites;
+                  if (state is FaveCarsLoaded) {
+                    final favorites = state.faveCars;
 
                     return ListView.builder(
                       padding: EdgeInsets.symmetric(
@@ -57,7 +57,10 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       ),
                       itemCount: favorites.length,
                       itemBuilder: (context, index) {
-                        return FavoriteCarCard(car: favorites[index]);
+                        return FavoriteCarCard(
+                          car: favorites[index],
+                          isDark: isDark,
+                        );
                       },
                     );
                   }

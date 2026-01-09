@@ -1,7 +1,9 @@
 import 'package:car_rent/Presentation%20Layer/pages/booking/cubit/cubit/booking_cubit.dart';
-import 'package:car_rent/Presentation%20Layer/pages/booking/pages/success_booking.dart';
+// import 'package:car_rent/Presentation%20Layer/pages/booking/pages/success_booking.dart'; // Unused
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:car_rent/core/constant/app_route.dart';
 
 class ConfirmBookingButton extends StatelessWidget {
   final int totalDays;
@@ -30,10 +32,7 @@ class ConfirmBookingButton extends StatelessWidget {
         if (state is BookingSuccess) {
           // Navigate to success page on success
           if (context.mounted) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const SuccessBooking()),
-            );
+            context.push(AppRoute.successBooking);
           }
           ScaffoldMessenger.of(
             context,

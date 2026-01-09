@@ -3,6 +3,7 @@ import 'package:car_rent/data/Data%20Layer/repositories/car_repository.dart';
 import 'package:car_rent/data/Data%20Layer/repositories/favorites_repository.dart';
 import 'package:car_rent/data/Data%20Layer/model/offer_model.dart';
 import 'package:car_rent/Domain%20Layer/Entities/car_entity.dart';
+import 'package:car_rent/core/constant/erorr.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
@@ -12,124 +13,107 @@ class HomeCubit extends Cubit<HomeState> {
   final CarRepository carRepository;
   final FavoritesRepository favoritesRepository;
 
+  static const int _pageSize = 3;
+
   HomeCubit(this.carRepository, this.favoritesRepository)
-    : super(HomeInitial());
+    : super(HomeState.initial());
 
-  List<CarEntity> cars = [];
-  List<String> brands = [];
-  List<String> categories = [];
-  List<CarEntity> carsByBrand = [];
-  List<OfferModel> offers = [];
+  int _currentPage = 1;
+  bool _isFetching = false;
+  Map<int, dynamic> _favoritesCache = {};
 
-  Future<void> fetchCars() async {
-    emit(HomeLoading());
-    try {
-      final response = await carRepository.getCars();
+  Future<void> fetchCars({
+    bool loadMore = false,
+    String? brand,
+    double? minPrice,
+    double? maxPrice,
+    String? gear,
+    String? gas,
+    bool? isAvailable,
+  }) async {
+    if (_isFetching) return;
+    _isFetching = true;
 
-      bool success = false;
-      response.fold(
-        (failure) {
-          emit(HomeError(failure.toString()));
-        },
-        (data) {
-          cars = List<CarEntity>.from(data);
-          success = true;
-        },
-      );
+    if (!loadMore) {
+      _currentPage = 1;
+      emit(state.copyWith(status: HomeStatus.loading, cars: []));
+    }
 
-      if (success) {
-        // Merge favorites into the cars list so UI shows favorite image/isFave
-        try {
+    final response = await carRepository.getCars(
+      pageNumber: _currentPage,
+      pageSize: _pageSize,
+      brand: brand,
+      minPrice: minPrice,
+      maxPrice: maxPrice,
+      gear: gear,
+      gas: gas,
+      isAvailable: isAvailable,
+    );
+
+    await response.fold(
+      (failure) {
+        if (failure is NetworkFailure) {
+          emit(state.copyWith(status: HomeStatus.networkFailure));
+        } else {
+          emit(
+            state.copyWith(
+              status: HomeStatus.failure,
+              errorMessage: failure.message,
+            ),
+          );
+        }
+      },
+      (cars) async {
+        // Load favorites once
+        if (_favoritesCache.isEmpty) {
           final favResponse = await favoritesRepository.getFavoriteCars();
-          favResponse.fold((failure) {}, (favList) {
-            final favMap = {for (var f in favList) f.id: f};
-            cars = cars.map((car) {
-              final fav = favMap[car.id];
-              if (fav != null) {
-                return car.copyWith(imageUrl: fav.imageUrl, isFavorite: true);
-              }
-              return car;
-            }).toList();
+          favResponse.fold((_) {}, (favList) {
+            _favoritesCache = {for (var f in favList) f.id: f};
           });
-        } catch (e) {
-          emit(HomeError('Failed to load favorites: $e'));
         }
 
-        carsByBrand = cars.where((car) => car.brand == 'Toyota').toList();
+        final mergedCars = cars.map((car) {
+          final fav = _favoritesCache[car.id];
+          return fav != null
+              ? car.copyWith(imageUrl: fav.imageUrl, isFavorite: true)
+              : car;
+        }).toList();
 
-        brands = cars
-            .map((car) => car.brand)
-            .whereType<String>()
-            .toSet()
-            .toList();
+        final updatedCars = loadMore
+            ? [...state.cars, ...mergedCars]
+            : mergedCars;
 
         emit(
-          HomeLoaded(
-            cars: cars,
-            carsByBrand: carsByBrand,
-            brands: brands,
-            categories: categories,
-            offers: offers,
+          state.copyWith(
+            status: HomeStatus.success,
+            cars: updatedCars,
+            brands: updatedCars
+                .map((c) => c.brand)
+                .whereType<String>()
+                .toSet()
+                .toList(),
+            carsByBrand: brand == null
+                ? updatedCars
+                : updatedCars.where((c) => c.brand == brand).toList(),
           ),
         );
-      }
-    } catch (e) {
-      emit(HomeError(e.toString()));
-    }
-  }
 
-  Future<void> loadHomeData() async {
-    emit(HomeLoading());
-    await fetchCars();
-    await getOffers();
+        _currentPage++;
+      },
+    );
+
+    _isFetching = false;
   }
 
   Future<void> getOffers() async {
-    try {
-      final response = await carRepository.getOffers();
+    final response = await carRepository.getOffers();
 
-      response.fold(
-        (failure) {
-          // Don't emit error, just use empty list
-          emit(
-            HomeLoaded(
-              cars: cars,
-              carsByBrand: carsByBrand,
-              brands: brands,
-              categories: categories,
-              offers: [], // Empty list as fallback
-            ),
-          );
-        },
-        (data) {
-          offers = List<OfferModel>.from(
-            (data).map((offer) {
-              return OfferModel.fromJson(offer);
-            }),
-          );
-
-          emit(
-            HomeLoaded(
-              cars: cars,
-              carsByBrand: carsByBrand,
-              brands: brands,
-              categories: categories,
-              offers: offers,
-            ),
-          );
-        },
-      );
-    } catch (e) {
-      // Don't crash, just emit with empty offers
+    response.fold((_) => emit(state.copyWith(offers: [])), (data) {
       emit(
-        HomeLoaded(
-          cars: cars,
-          carsByBrand: carsByBrand,
-          brands: brands,
-          categories: categories,
-          offers: [],
+        state.copyWith(
+          offers: data.map<OfferModel>((e) => OfferModel.fromJson(e)).toList(),
         ),
       );
-    }
+    });
   }
 }

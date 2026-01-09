@@ -1,17 +1,19 @@
+import 'package:car_rent/Presentation%20Layer/pages/auth/cubit/auth/cubit/auth_cubit.dart';
 import 'package:car_rent/data/Data%20Layer/Local%20Data%20Sources/auth_local_data_source.dart';
 import 'package:car_rent/data/Data%20Layer/model/login_requst.dart';
 import 'package:car_rent/data/Data%20Layer/repositories/auth_repository.dart';
 import 'package:car_rent/Presentation%20Layer/pages/auth/cubit/login/cubit/login_cubit.dart';
 import 'package:car_rent/core/constant/app_colors.dart';
 import 'package:car_rent/l10n/app_localizations.dart';
-import 'package:car_rent/Presentation%20Layer/pages/auth/pages/regster.dart';
-import 'package:car_rent/Presentation%20Layer/pages/home/home.dart';
+
 import 'package:car_rent/Presentation%20Layer/pages/auth/widget/auth_app_bar.dart';
 import 'package:car_rent/Presentation%20Layer/pages/auth/widget/widge_button.dart';
 import 'package:car_rent/server_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:car_rent/core/constant/app_route.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -20,20 +22,13 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
 
   void _goToRegister(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => const RegisterScreen()),
-    );
+    context.push(AppRoute.register);
   }
 
   @override
   Widget build(BuildContext context) {
     void goToHome() {
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (_) => Home()),
-        (route) => false,
-      );
+      context.go(AppRoute.home);
     }
 
     final t = AppLocalizations.of(context);
@@ -48,6 +43,7 @@ class LoginScreen extends StatelessWidget {
               CircularProgressIndicator();
             }
             if (state is LoginSuccess) {
+              context.read<AuthCubit>().onLoginSuccess();
               ScaffoldMessenger.of(
                 context,
               ).showSnackBar(SnackBar(content: Text(state.name)));

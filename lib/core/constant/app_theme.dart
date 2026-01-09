@@ -1,32 +1,48 @@
 import 'package:flutter/material.dart';
-import '../constant/app_colors.dart';
+import 'app_colors.dart';
 
 class AppTheme {
+  // ------------------ SCHEMES ------------------
+  static final ColorScheme _lightScheme = ColorScheme.fromSeed(
+    seedColor: AppColors.primaryColor,
+    brightness: Brightness.light,
+  );
+
+  static final ColorScheme _darkScheme = ColorScheme.fromSeed(
+    seedColor: AppColors.accentBlueDark,
+    brightness: Brightness.dark,
+    surfaceContainerHighest: AppColors.surfaceDarkElevated,
+    outline: AppColors.borderDark,
+  );
+
   // ------------------ LIGHT THEME ------------------
   static final ThemeData light = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
 
     scaffoldBackgroundColor: AppColors.backgroundLight,
-    primaryColor: AppColors.primaryColor,
-
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: AppColors.primaryColor,
-      brightness: Brightness.light,
-      primary: AppColors.primaryColor,
-      secondary: AppColors.secondaryColor,
-      surface: AppColors.white,
-      onSurface: AppColors.textPrimary,
-      error: AppColors.errorColor,
-    ),
+    colorScheme: _lightScheme,
 
     textTheme: const TextTheme(
-      bodyLarge: TextStyle(
-        fontSize: 18,
-        color: AppColors.textPrimary,
-        fontWeight: FontWeight.bold,
+      bodyLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      bodyMedium: TextStyle(fontSize: 16),
+    ),
+
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.primaryColor,
+        foregroundColor: AppColors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
-      bodyMedium: TextStyle(fontSize: 16, color: AppColors.textSecondary),
+    ),
+
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: AppColors.surfaceLight,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: AppColors.borderColor),
+      ),
     ),
   );
 
@@ -36,34 +52,18 @@ class AppTheme {
     brightness: Brightness.dark,
 
     scaffoldBackgroundColor: AppColors.backgroundDarkPrimary,
-    primaryColor: AppColors.accentBlueDark,
-
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: AppColors.accentBlueDark,
-      brightness: Brightness.dark,
-      primary: AppColors.accentBlueDark,
-      secondary: AppColors.accentPurpleDark,
-      surface: AppColors.surfaceDark,
-      onSurface: AppColors.textDarkPrimary,
-      error: AppColors.errorColor,
-      surfaceContainerHighest: AppColors.surfaceDarkElevated,
-      outline: AppColors.borderDark,
-    ),
+    colorScheme: _darkScheme,
 
     cardColor: AppColors.surfaceDark,
     dividerColor: AppColors.dividerDark,
 
     textTheme: const TextTheme(
-      bodyLarge: TextStyle(
-        fontSize: 18,
-        color: AppColors.textDarkPrimary,
-        fontWeight: FontWeight.bold,
-      ),
+      bodyLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
       bodyMedium: TextStyle(fontSize: 16, color: AppColors.textDarkSecondary),
       bodySmall: TextStyle(fontSize: 14, color: AppColors.textDarkHint),
     ),
 
-    iconTheme: const IconThemeData(color: AppColors.textDarkPrimary),
+    iconTheme: IconThemeData(color: _darkScheme.onSurface),
 
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.backgroundDarkSecondary,

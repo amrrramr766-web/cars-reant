@@ -11,16 +11,13 @@ class FaveCubit extends Cubit<FaveState> {
   final FavoritesRepository favoritesRepository;
   FaveCubit(this.favoritesRepository) : super(FaveInitial());
 
-  List<CarEntity> favorites = [];
-
   Future<void> loadFavorites() async {
     emit(FaveLoading());
     final response = await favoritesRepository.getFavoriteCars();
     response.fold(
       (l) => emit(const FaveError(message: "Error fetching favorites")),
       (r) {
-        favorites = r;
-        emit(FaveLoaded(favorites: List.from(favorites)));
+        emit(FaveCarsLoaded(faveCars: List.from(r)));
       },
     );
   }

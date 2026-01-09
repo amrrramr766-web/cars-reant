@@ -1,5 +1,6 @@
 import 'package:car_rent/core/constant/app_route.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SuccessBooking extends StatelessWidget {
   const SuccessBooking({super.key});
@@ -40,10 +41,7 @@ class SuccessBooking extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(
-                      context,
-                      AppRoute.home,
-                    ); // العودة للصفحة السابقة
+                    context.go(AppRoute.home);
                   },
                   child: const Text("Back to Home"),
                 ),

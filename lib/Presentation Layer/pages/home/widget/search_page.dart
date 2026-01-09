@@ -1,19 +1,18 @@
-import 'package:car_rent/Domain%20Layer/Entities/car_entity.dart';
-import 'package:car_rent/Presentation%20Layer/pages/car_delteal/cubit/cubit/car_deteail_dart_cubit.dart';
+import 'package:car_rent/core/constant/app_route.dart';
+
 import 'package:car_rent/data/Data%20Layer/model/suggestions_model.dart';
-import 'package:car_rent/server_locator.dart';
-import 'package:car_rent/Presentation%20Layer/pages/car_delteal/car_delteal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:car_rent/Presentation%20Layer/controller/search/cubit/search_cubit.dart';
 import 'package:car_rent/Presentation%20Layer/controller/search/cubit/search_state.dart';
-import 'package:car_rent/core/constant/app_colors.dart';
+import 'package:go_router/go_router.dart';
 
 class SearchPage extends SearchDelegate<void> {
+  final bool isDark;
   final SearchCubit searchCubit;
   bool _initialized = false;
 
-  SearchPage({required this.searchCubit});
+  SearchPage({required this.searchCubit, required this.isDark});
 
   // ================= ACTIONS =================
   @override
@@ -111,14 +110,9 @@ class SearchPage extends SearchDelegate<void> {
             final carDetails = await searchCubit.getCarDetails(car.carId!);
 
             if (carDetails != null) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => BlocProvider(
-                    create: (_) => sl<CarDeteailDartCubit>(),
-                    child: CarDetailsPage(car: carDetails),
-                  ),
-                ),
+              context.push(
+                '${AppRoute.carDetail}/${carDetails.id}',
+                extra: carDetails,
               );
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -153,14 +147,9 @@ class SearchPage extends SearchDelegate<void> {
             final carDetails = await searchCubit.getCarDetails(car.id!);
 
             if (carDetails != null) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => BlocProvider(
-                    create: (_) => sl<CarDeteailDartCubit>(),
-                    child: CarDetailsPage(car: carDetails),
-                  ),
-                ),
+              context.push(
+                '${AppRoute.carDetail}/${carDetails.id}',
+                extra: carDetails,
               );
             } else {
               ScaffoldMessenger.of(context).showSnackBar(

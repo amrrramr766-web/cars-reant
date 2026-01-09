@@ -6,7 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FavoriteCarCard extends StatelessWidget {
   final CarEntity car;
-  const FavoriteCarCard({super.key, required this.car});
+  final bool isDark;
+  const FavoriteCarCard({super.key, required this.car, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +94,7 @@ class FavoriteCarCard extends StatelessWidget {
                           SizedBox(width: 200.w),
                           faveButton(
                             carId: car.id,
+                            isDark: isDark,
                             isFavorited: car.isFavorite,
                           ),
                         ],
@@ -115,7 +117,7 @@ class FavoriteCarCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               SizedBox(height: 12.h),
-              CarDetail(car: car),
+              CarDetail(car: car, isDark: isDark),
             ],
           ),
         ),

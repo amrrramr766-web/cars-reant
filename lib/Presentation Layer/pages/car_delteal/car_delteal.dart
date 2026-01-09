@@ -11,30 +11,20 @@ import 'package:car_rent/server_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CarDetailsPage extends StatefulWidget {
   final CarEntity car;
-  const CarDetailsPage({super.key, required this.car});
+  final bool isDark;
+  const CarDetailsPage({super.key, required this.car, required this.isDark});
 
   @override
   State<CarDetailsPage> createState() => _CarDetailsPageState();
 }
 
 class _CarDetailsPageState extends State<CarDetailsPage> {
-  int userId = 0;
-
   @override
   void initState() {
     super.initState();
-    _loadUserId();
-  }
-
-  Future<void> _loadUserId() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      userId = prefs.getInt("userID") ?? 0;
-    });
   }
 
   @override
@@ -48,7 +38,7 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
         body: SafeArea(
           child: CustomScrollView(
             slivers: [
-              CarImagesSlider(car: widget.car),
+              CarImagesSlider(car: widget.car, isDark: widget.isDark),
               SliverToBoxAdapter(
                 child: Padding(
                   padding: EdgeInsets.all(16.w),

@@ -1,6 +1,6 @@
 import 'package:car_rent/data/Data%20Layer/Local%20Data%20Sources/auth_local_data_source.dart';
 import 'package:car_rent/Presentation%20Layer/pages/booking/cubit/cubit/booking_cubit.dart';
-import 'package:car_rent/data/Data%20Layer/model/booking_model.dart';
+import 'package:car_rent/Domain%20Layer/Entities/booking_entity.dart';
 import 'package:car_rent/data/Data%20Layer/Remote%20Data%20Sources/booking_remote_data_source.dart';
 import 'package:car_rent/data/Data%20Layer/repositories/booking_repository.dart';
 import 'package:car_rent/Presentation%20Layer/pages/booking/widget/history/rental_card.dart';
@@ -55,15 +55,12 @@ class _CardListState extends State<CardList> {
               // ✅ Filter bookings based on showPast flag
               final filteredBookings = widget.showPast
                   ? state.bookings.where((b) {
-                      final end = b.endDate != null
-                          ? DateTime.parse(b.endDate!)
-                          : now;
+                      final end = b.endDate;
+
                       return end.isBefore(now);
                     }).toList()
                   : state.bookings.where((b) {
-                      final end = b.endDate != null
-                          ? DateTime.parse(b.endDate!)
-                          : now;
+                      final end = b.endDate;
                       return end.isAfter(now) || end.isAtSameMomentAs(now);
                     }).toList();
 
@@ -94,12 +91,8 @@ class _CardListState extends State<CardList> {
                     status: statusText,
                     title: "${booking.brand ?? "Car"} ${booking.model ?? ""}"
                         .trim(),
-                    startDate: booking.startDate != null
-                        ? DateTime.parse(booking.startDate!)
-                        : null,
-                    endDate: booking.endDate != null
-                        ? DateTime.parse(booking.endDate!)
-                        : null,
+                    startDate: booking.startDate,
+                    endDate: booking.endDate,
                     statusColor: booking.status == BookingStatus.confirmed
                         ? Colors.green
                         : Colors.grey,

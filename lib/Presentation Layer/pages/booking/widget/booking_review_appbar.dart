@@ -1,5 +1,6 @@
 import 'package:car_rent/core/constant/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class BookingReviewAppBar extends StatelessWidget
     implements PreferredSizeWidget {
@@ -15,7 +16,7 @@ class BookingReviewAppBar extends StatelessWidget
       elevation: 0,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back, color: AppColors.black),
-        onPressed: () => Navigator.pop(context),
+        onPressed: () => context.pop(),
       ),
       centerTitle: true,
       title: const Text(

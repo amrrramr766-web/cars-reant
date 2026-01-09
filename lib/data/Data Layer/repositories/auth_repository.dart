@@ -4,7 +4,6 @@ import 'package:car_rent/data/Data%20Layer/Remote%20Data%20Sources/auth_remote_d
 import 'package:car_rent/Domain%20Layer/Repository%20Interfaces/i_auth_repository.dart';
 import 'package:car_rent/core/class/states_request.dart';
 import 'package:car_rent/core/constant/erorr.dart';
-import 'package:car_rent/data/Data%20Layer/model/extension/user_model_mapper.dart';
 import 'package:car_rent/data/Data%20Layer/model/user_model.dart';
 import 'package:dartz/dartz.dart';
 

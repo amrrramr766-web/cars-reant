@@ -8,15 +8,12 @@ class HomeContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Load once when widget is built the first time
-    context.read<HomeCubit>().loadHomeData();
-
     return BlocListener<HomeCubit, HomeState>(
       listener: (context, state) {
-        if (state is HomeError) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
+        if (state.status == HomeStatus.failure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.errorMessage ?? 'An error occurred')),
+          );
         }
       },
       child: const HomeBody(),

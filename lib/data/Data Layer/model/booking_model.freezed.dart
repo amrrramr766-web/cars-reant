@@ -25,6 +25,7 @@ mixin _$BookingModel {
   String? get startDate => throw _privateConstructorUsedError;
   String? get endDate => throw _privateConstructorUsedError;
   double? get totalPrice => throw _privateConstructorUsedError;
+  @BookingStatusConverter()
   BookingStatus? get status => throw _privateConstructorUsedError;
   @JsonKey(name: 'userID')
   int? get userId => throw _privateConstructorUsedError;
@@ -53,7 +54,7 @@ abstract class $BookingModelCopyWith<$Res> {
       String? startDate,
       String? endDate,
       double? totalPrice,
-      BookingStatus? status,
+      @BookingStatusConverter() BookingStatus? status,
       @JsonKey(name: 'userID') int? userId,
       @JsonKey(name: 'carID') int? carId,
       String? fullName,
@@ -149,7 +150,7 @@ abstract class _$$BookingModelImplCopyWith<$Res>
       String? startDate,
       String? endDate,
       double? totalPrice,
-      BookingStatus? status,
+      @BookingStatusConverter() BookingStatus? status,
       @JsonKey(name: 'userID') int? userId,
       @JsonKey(name: 'carID') int? carId,
       String? fullName,
@@ -232,19 +233,20 @@ class __$$BookingModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$BookingModelImpl implements _BookingModel {
+class _$BookingModelImpl extends _BookingModel {
   const _$BookingModelImpl(
       {@JsonKey(name: 'bookingID') this.id,
       this.startDate,
       this.endDate,
       this.totalPrice,
-      this.status,
+      @BookingStatusConverter() this.status,
       @JsonKey(name: 'userID') this.userId,
       @JsonKey(name: 'carID') this.carId,
       this.fullName,
       this.brand,
       this.model,
-      this.year});
+      this.year})
+      : super._();
 
   factory _$BookingModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$BookingModelImplFromJson(json);
@@ -259,6 +261,7 @@ class _$BookingModelImpl implements _BookingModel {
   @override
   final double? totalPrice;
   @override
+  @BookingStatusConverter()
   final BookingStatus? status;
   @override
   @JsonKey(name: 'userID')
@@ -321,19 +324,20 @@ class _$BookingModelImpl implements _BookingModel {
   }
 }
 
-abstract class _BookingModel implements BookingModel {
+abstract class _BookingModel extends BookingModel {
   const factory _BookingModel(
       {@JsonKey(name: 'bookingID') final int? id,
       final String? startDate,
       final String? endDate,
       final double? totalPrice,
-      final BookingStatus? status,
+      @BookingStatusConverter() final BookingStatus? status,
       @JsonKey(name: 'userID') final int? userId,
       @JsonKey(name: 'carID') final int? carId,
       final String? fullName,
       final String? brand,
       final String? model,
       final String? year}) = _$BookingModelImpl;
+  const _BookingModel._() : super._();
 
   factory _BookingModel.fromJson(Map<String, dynamic> json) =
       _$BookingModelImpl.fromJson;
@@ -348,6 +352,7 @@ abstract class _BookingModel implements BookingModel {
   @override
   double? get totalPrice;
   @override
+  @BookingStatusConverter()
   BookingStatus? get status;
   @override
   @JsonKey(name: 'userID')

@@ -1,4 +1,4 @@
-abstract class IStorageService  {
+abstract class IStorageService {
   Future<int?> getUserId();
   Future<void> setUserId(int userId);
   Future<String?> getString(String key);

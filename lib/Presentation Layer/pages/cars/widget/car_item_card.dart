@@ -1,157 +1,130 @@
 import 'package:car_rent/Domain%20Layer/Entities/car_entity.dart';
-import 'package:car_rent/core/constant/app_colors.dart';
-import 'package:car_rent/Presentation%20Layer/pages/car_delteal/car_delteal.dart';
+import 'package:car_rent/Presentation%20Layer/pages/booking/cubit/cubit/booking_cubit.dart';
+import 'package:car_rent/Presentation%20Layer/pages/booking/pages/booking.dart';
 import 'package:car_rent/Presentation%20Layer/widget/common/fave_button.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:car_rent/Presentation%20Layer/pages/car_delteal/cubit/cubit/car_deteail_dart_cubit.dart';
+import 'package:car_rent/data/Data%20Layer/repositories/booking_repository.dart';
 import 'package:car_rent/server_locator.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CarItemCard extends StatelessWidget {
   final CarEntity car;
-  final int userId;
-  final bool isdark;
+  final bool reversed;
+  final bool isDark;
 
   const CarItemCard({
     super.key,
     required this.car,
-    required this.userId,
-    required this.isdark,
+    required this.reversed,
+    required this.isDark,
   });
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Card(
-          color: isdark ? AppColors.surfaceDark : AppColors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.r),
+    final image = Stack(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Container(
+            color: Colors.grey,
+            width: 500,
+            height: 190,
+            child: Image.network(car.imageUrl, fit: BoxFit.cover),
           ),
-          elevation: 5,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Stack(
-                children: [
-                  // صورة السيارة
-                  ClipRRect(
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(15.r),
-                    ),
-                    child: (car.imageUrl.isNotEmpty)
-                        ? Image.network(
-                            car.imageUrl,
-                            height:
-                                constraints.maxHeight *
-                                0.5, // 40% من ارتفاع الكارد
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) =>
-                                Container(
-                                  height: constraints.maxHeight * 0.5,
-                                  color: isdark
-                                      ? AppColors.backgroundDark
-                                      : AppColors.backgroundLight,
-                                  child: const Center(
-                                    child: Icon(
-                                      Icons.directions_car,
-                                      size: 48,
-                                      color: AppColors.grey,
-                                    ),
-                                  ),
-                                ),
-                          )
-                        : Container(
-                            height: constraints.maxHeight * 0.5,
-                            color: isdark
-                                ? AppColors.surfaceDarkElevated
-                                : AppColors.backgroundLight,
-                            child: const Center(
-                              child: Icon(
-                                Icons.directions_car,
-                                size: 48,
-                                color: AppColors.grey,
-                              ),
-                            ),
-                          ),
-                  ),
-                  faveButton(carId: car.id, isFavorited: car.isFavorite),
-                ],
+        ),
+        Positioned(
+          top: 8,
+          left: reversed ? null : 8,
+          right: reversed ? 8 : null,
+          child: faveButton(
+            carId: car.id,
+            isDark: isDark,
+            isFavorited: car.isFavorite,
+          ),
+        ),
+      ],
+    );
+
+    final details = Column(
+      crossAxisAlignment: reversed
+          ? CrossAxisAlignment.end
+          : CrossAxisAlignment.start,
+      children: [
+        Text(
+          car.brand.toUpperCase(),
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.grey,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          car.model,
+          textAlign: reversed ? TextAlign.right : TextAlign.left,
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 6),
+        Row(
+          mainAxisAlignment: reversed
+              ? MainAxisAlignment.end
+              : MainAxisAlignment.start,
+          children: [
+            Text(
+              "\$${car.pricePerDay.toStringAsFixed(0)}",
+              style: const TextStyle(
+                decoration: TextDecoration.lineThrough,
+                color: Colors.grey,
               ),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              "\$${car.pricePerDay.toStringAsFixed(0)}",
+              style: const TextStyle(
+                color: Colors.red,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
 
-              SizedBox(height: 8.h),
-
-              // اسم السيارة والحالة
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.w),
-                child: Column(
-                  children: [
-                    Text(
-                      car.brand,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.sp,
-                        color: isdark ? AppColors.white : AppColors.black,
-                      ),
-                    ),
-                    SizedBox(height: 4.h),
-                    Text(
-                      car.isAvailable ? "Available" : "Not Available",
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: isdark ? AppColors.white : AppColors.black,
-                      ),
-                    ),
-                  ],
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: reversed ? Colors.black : Colors.red,
+            shape: const StadiumBorder(),
+          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => BlocProvider(
+                  create: (_) => BookingCubit(sl<BookingRepository>()),
+                  child: BookingReviewPage(car: car),
                 ),
               ),
+            );
+          },
+          child: const Text("Add to Cart"),
+        ),
+      ],
+    );
 
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 36.h,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BlocProvider(
-                            create: (context) {
-                              final cubit = sl<CarDeteailDartCubit>();
-                              cubit.fetchReviews(car.id);
-                              return cubit;
-                            },
-                            child: CarDetailsPage(car: car),
-                          ),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: isdark
-                          ? AppColors.darkPurple
-                          : AppColors.deepPurple,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                    ),
-                    child: Text(
-                      "Details",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.bold,
-                        color: isdark ? AppColors.white : AppColors.black,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: Row(
+        children: reversed
+            ? [
+                Expanded(child: details),
+                const SizedBox(width: 16),
+                SizedBox(width: 250, child: image),
+              ]
+            : [
+                SizedBox(width: 250, child: image),
+                const SizedBox(width: 16),
+                Expanded(child: details),
+              ],
+      ),
     );
   }
 }

@@ -9,7 +9,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CarDetail extends StatelessWidget {
   final CarEntity car;
-  const CarDetail({super.key, required this.car});
+  final bool isDark;
+  const CarDetail({super.key, required this.car, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class CarDetail extends StatelessWidget {
                     cubit.fetchReviews(car.id);
                     return cubit;
                   },
-                  child: CarDetailsPage(car: car),
+                  child: CarDetailsPage(car: car, isDark: isDark),
                 ),
               ),
             );

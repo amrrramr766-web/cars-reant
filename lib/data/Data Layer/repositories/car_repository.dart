@@ -92,10 +92,26 @@ class CarRepository implements ICarRepository {
   }
 
   @override
-  Future<Either<Failure, List<CarEntity>>> getCars() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int? userId = prefs.getInt("userID");
-    var response = await remoteDataSource.getCars(userId ?? 0);
+  Future<Either<Failure, List<CarEntity>>> getCars({
+    required int pageNumber,
+    required int pageSize,
+    String? brand,
+    double? minPrice,
+    double? maxPrice,
+    String? gear,
+    String? gas,
+    bool? isAvailable,
+  }) async {
+    final response = await remoteDataSource.getCars(
+      pageNumber: pageNumber,
+      pageSize: pageSize,
+      brand: brand,
+      minPrice: minPrice,
+      maxPrice: maxPrice,
+      gear: gear,
+      gas: gas,
+      isAvailable: isAvailable,
+    );
 
     return response.fold((status) => Left(_mapStatusRequestToFailure(status)), (
       data,
@@ -104,18 +120,18 @@ class CarRepository implements ICarRepository {
         List<dynamic> listData;
         if (data is List) {
           listData = data;
-        } else if (data is Map && data.containsKey('data')) {
+        } else if (data is Map<String, dynamic> && data.containsKey('data')) {
           listData = data['data'];
         } else {
-          // If response is not a list or doesn't have 'data', it might be a failure or unexpected format.
           return Left(
             ServerFailure('Unexpected response format: ${data.runtimeType}'),
           );
         }
 
-        List<CarEntity> cars = listData
-            .map((e) => CarModel.fromJson(e).toEntity())
+        final cars = listData
+            .map((e) => CarModel.fromJson(e as Map<String, dynamic>).toEntity())
             .toList();
+
         return Right(cars);
       } catch (e) {
         return Left(ServerFailure('Failed to parse car data: $e'));
@@ -128,7 +144,7 @@ class CarRepository implements ICarRepository {
       case StatusRequest.serverfailure:
         return const ServerFailure('Server error occurred');
       case StatusRequest.offlinefailure:
-        return const CacheFailure('No internet connection');
+        return const NetworkFailure('No internet connection');
       default:
         return const ServerFailure('An unknown error occurred');
     }

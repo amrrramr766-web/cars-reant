@@ -1,4 +1,3 @@
-import 'package:car_rent/Domain%20Layer/Entities/license_entity.dart';
 import 'package:car_rent/data/Data%20Layer/model/license_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

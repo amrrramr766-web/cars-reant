@@ -1,11 +1,9 @@
 import 'package:car_rent/Domain%20Layer/Entities/car_entity.dart';
-import 'package:car_rent/Presentation%20Layer/pages/car_delteal/car_delteal.dart';
-import 'package:car_rent/Presentation%20Layer/pages/car_delteal/cubit/cubit/car_deteail_dart_cubit.dart';
 import 'package:car_rent/core/constant/app_colors.dart';
-import 'package:car_rent/server_locator.dart';
+import 'package:car_rent/core/constant/app_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class CarHeader extends StatelessWidget {
   final CarEntity car;
@@ -71,19 +69,7 @@ class SelectButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: car.isAvailable
             ? () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => BlocProvider(
-                      create: (_) {
-                        final cubit = sl<CarDeteailDartCubit>();
-                        cubit.fetchReviews(car.id);
-                        return cubit;
-                      },
-                      child: CarDetailsPage(car: car),
-                    ),
-                  ),
-                );
+                context.push('${AppRoute.carDetail}/${car.id}', extra: car);
               }
             : null,
         style: ElevatedButton.styleFrom(

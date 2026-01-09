@@ -28,8 +28,4 @@ class BookingRemoteDataSource {
   Future<Either<StatusRequest, dynamic>> getBookingById(int userId) async {
     return await crud.getData("${LinkApi.getBookingsByUser}/$userId");
   }
-
-  Future<Either<StatusRequest, dynamic>> getUserBookings(int userId) async {
-    return await crud.getData("${LinkApi.getBookingsByUser}/$userId");
-  }
 }

@@ -1,17 +1,19 @@
+import 'package:car_rent/Presentation%20Layer/pages/auth/cubit/auth/cubit/auth_cubit.dart';
 import 'package:car_rent/data/Data%20Layer/Local%20Data%20Sources/auth_local_data_source.dart';
 import 'package:car_rent/data/Data%20Layer/repositories/auth_repository.dart';
 import 'package:car_rent/Presentation%20Layer/pages/auth/cubit/REGSTER/cubit/regster_cubit.dart';
 import 'package:car_rent/core/constant/app_colors.dart';
 import 'package:car_rent/core/constant/validator_class.dart';
 import 'package:car_rent/l10n/app_localizations.dart';
-import 'package:car_rent/Presentation%20Layer/pages/auth/pages/login.dart';
-import 'package:car_rent/Presentation%20Layer/pages/home/home.dart';
+
 import 'package:car_rent/Presentation%20Layer/pages/auth/widget/auth_app_bar.dart';
 import 'package:car_rent/server_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:car_rent/Presentation%20Layer/pages/auth/widget/text_form_filed.dart';
 import 'package:car_rent/Presentation%20Layer/pages/auth/widget/widge_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:car_rent/core/constant/app_route.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -49,7 +51,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void _goToLogin() {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => LoginScreen()));
+    context.push(AppRoute.login);
   }
 
   @override
@@ -64,6 +66,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         body: BlocConsumer<RegsterCubit, RegsterState>(
           listener: (context, state) {
             if (state is RegsterSuccess) {
+              context.read<AuthCubit>().onLoginSuccess();
               // Show snackbar first
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -75,10 +78,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               // Navigate after delay
               Future.delayed(Duration(seconds: 2), () {
                 if (mounted) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (_) => Home()),
-                  );
+                  context.go(AppRoute.home);
                 }
               });
             } else if (state is RegsterFailure) {

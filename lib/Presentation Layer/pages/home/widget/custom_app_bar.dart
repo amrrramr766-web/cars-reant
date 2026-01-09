@@ -12,111 +12,122 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:car_rent/core/constant/app_colors.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final bool isDark;
   final AuthLocalDataSource authLocalDataSource = sl<AuthLocalDataSource>();
 
-  CustomAppBar({super.key});
+  CustomAppBar({super.key, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginCubit, LoginState>(
-      builder: (context, state) {
-        // If logged in via Cubit
-        String userName = (state is LoginSuccess) ? state.name : "Guest";
+    return BlocProvider(
+      create: (context) => sl<LoginCubit>(),
+      child: BlocBuilder<LoginCubit, LoginState>(
+        builder: (context, state) {
+          // If logged in via Cubit
+          String userName = (state is LoginSuccess) ? state.name : "Guest";
 
-        // Use FutureBuilder to override userName if stored locally
-        return FutureBuilder<UserModel>(
-          future: authLocalDataSource.getUser(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done &&
-                snapshot.hasData) {
-              userName = snapshot.data!.fullName;
-            }
+          // Use FutureBuilder to override userName if stored locally
+          return FutureBuilder<UserModel>(
+            future: authLocalDataSource.getUser(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done &&
+                  snapshot.hasData) {
+                userName = snapshot.data!.fullName;
+              }
 
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              child: SafeArea(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => BlocProvider(
-                          create: (_) => BookingCubit(sl<BookingRepository>()),
-                          child: const ProfileSettingsPage(),
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
+                child: SafeArea(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => BlocProvider(
+                            create: (_) =>
+                                BookingCubit(sl<BookingRepository>()),
+                            child: const ProfileSettingsPage(),
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // Profile
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 22,
-                            backgroundColor: AppColors.deepPurple200,
-                            child: Text(
-                              userName.isNotEmpty
-                                  ? userName.characters.first.toUpperCase()
-                                  : "G",
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.white,
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Profile
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 22,
+                              backgroundColor: AppColors.deepPurple200,
+                              child: Text(
+                                userName.isNotEmpty
+                                    ? userName.characters.first.toUpperCase()
+                                    : "G",
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.white,
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(width: 10),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "Welcome 👋",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: AppColors.grey,
+                            const SizedBox(width: 10),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Welcome 👋",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors.grey,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                userName,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                                Text(
+                                  userName,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      // Notification + Search
-                      Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.notifications),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.search),
-                            onPressed: () {
-                              final searchCubit = sl<SearchCubit>();
+                              ],
+                            ),
+                          ],
+                        ),
+                        // Notification + Search
+                        Row(
+                          children: [
+                            IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.notifications),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.search),
+                              onPressed: () {
+                                final searchCubit = sl<SearchCubit>();
 
-                              showSearch(
-                                context: context,
-                                delegate: SearchPage(searchCubit: searchCubit),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
+                                showSearch(
+                                  context: context,
+                                  delegate: SearchPage(
+                                    searchCubit: searchCubit,
+                                    isDark: isDark,
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
-        );
-      },
+              );
+            },
+          );
+        },
+      ),
     );
   }
 

@@ -1,6 +1,8 @@
 import 'package:car_rent/l10n/app_localizations.dart';
-import 'package:car_rent/Presentation%20Layer/pages/auth/pages/regster.dart';
+// import 'package:car_rent/Presentation%20Layer/pages/auth/pages/regster.dart'; // Removed unused import
 import 'package:car_rent/Presentation%20Layer/pages/onBording/cubit/cubit/on_bording_cubit.dart';
+import 'package:go_router/go_router.dart';
+import 'package:car_rent/core/constant/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -54,13 +56,8 @@ class ListIndex extends StatelessWidget {
                   if (state == itemCount - 1) {
                     final prefs = await SharedPreferences.getInstance();
                     await prefs.setString("step", "1");
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RegisterScreen(),
-                      ),
-                      (route) => false,
-                    );
+                    await prefs.setString("step", "1");
+                    context.go(AppRoute.register);
                   } else {
                     pageController.nextPage(
                       duration: const Duration(milliseconds: 300),

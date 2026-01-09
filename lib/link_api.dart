@@ -1,6 +1,6 @@
 class LinkApi {
   // static const String baseUrl = "http://0.0.0.0:5267/api";
-  static const String baseUrl = "http://192.168.1.8:5267/api";
+  static const String baseUrl = "http://192.168.1.6:5267/api";
 
   // Users
   static const String login = "$baseUrl/users/Login";
@@ -10,7 +10,10 @@ class LinkApi {
       "$baseUrl/users/"; // GET + id => Get user license info
 
   // Cars
-  static const String getCars = "$baseUrl/car?userId="; // GET => Get all cars
+  static String getCars() {
+    return "$baseUrl/car/search"; // فقط الرابط، البيانات سترسل في body عند POST
+  }
+
   static const String getCarById = "$baseUrl/car/"; // GET + id => Get car by Id
   static const String addCar = "$baseUrl/car"; // POST => Add new car
   static const String updateCar = "$baseUrl/car/"; // PUT + id => Update car

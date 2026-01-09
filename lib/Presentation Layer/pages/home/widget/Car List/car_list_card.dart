@@ -1,99 +1,49 @@
+// PagedSliverList يتحكم بالتحميل الصفحي داخليًا
 import 'package:car_rent/Domain%20Layer/Entities/car_entity.dart';
-import 'package:car_rent/Presentation%20Layer/pages/home/widget/Car%20List/car_header.dart';
-import 'package:car_rent/Presentation%20Layer/pages/home/widget/Car%20List/car_image.dart';
-import 'package:car_rent/core/constant/app_colors.dart';
+import 'package:car_rent/Presentation%20Layer/pages/cars/cubit/cubit/cars_cubit.dart';
+import 'package:car_rent/Presentation%20Layer/pages/home/widget/Car%20List/car_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class CarListCard extends StatelessWidget {
-  final List<CarEntity> cars;
+class CarListItems extends StatefulWidget {
   final bool isdark;
-
-  const CarListCard({super.key, required this.cars, required this.isdark});
+  const CarListItems({super.key, required this.isdark});
 
   @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const BouncingScrollPhysics(),
-      itemCount: cars.length,
-      itemBuilder: (context, index) {
-        return _CarCard(car: cars[index], isdark: isdark);
-      },
-    );
-  }
+  State<CarListItems> createState() => _CarListItemsState();
 }
 
-class _CarCard extends StatelessWidget {
-  final CarEntity car;
-  final bool isdark;
-
-  const _CarCard({required this.car, required this.isdark});
+class _CarListItemsState extends State<CarListItems> {
+  late final _pagingController = PagingController<int, CarEntity>(
+    getNextPageKey: (state) =>
+        state.lastPageIsEmpty ? null : state.nextIntPageKey,
+    fetchPage: (pageKey) => context.read<CarsCubit>().fetchCarsPage(pageKey),
+  );
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
-      child: Stack(
-        children: [
-          _buildCard(context),
-          if (!car.isAvailable) _buildUnavailableOverlay(),
-        ],
-      ),
-    );
+  void initState() {
+    super.initState();
   }
 
-  Widget _buildCard(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: isdark ? AppColors.surfaceDark : AppColors.white,
-        borderRadius: BorderRadius.circular(10.r),
-        boxShadow: [
-          BoxShadow(
-            color: isdark
-                ? AppColors.blackWithOpacity(0.4)
-                : AppColors.grey.withOpacity(0.3),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(12.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CarImage(car: car, isdark: isdark),
-            SizedBox(height: 8.h),
-            CarHeader(car: car, isdark: isdark),
-            SizedBox(height: 4.h),
-            CarSpecs(car: car, isdark: isdark),
-            SizedBox(height: 12.h),
-            SelectButton(car: car, isdark: isdark),
-          ],
-        ),
-      ),
-    );
+  @override
+  void dispose() {
+    _pagingController.dispose();
+    super.dispose();
   }
 
-  Widget _buildUnavailableOverlay() {
-    return Positioned.fill(
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.blackWithOpacity(0.5),
-          borderRadius: BorderRadius.circular(10.r),
-        ),
-        child: const Center(
-          child: Text(
-            'Not Available',
-            style: TextStyle(
-              color: AppColors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
+  @override
+  Widget build(BuildContext context) => PagingListener(
+    controller: _pagingController,
+    builder: (context, state, fetchNextPage) =>
+        PagedSliverList<int, CarEntity>.separated(
+          state: state,
+          fetchNextPage: fetchNextPage,
+          separatorBuilder: (context, index) => const SizedBox(height: 16),
+          builderDelegate: PagedChildBuilderDelegate(
+            itemBuilder: (context, item, index) =>
+                CarCard(car: item, isdark: widget.isdark),
           ),
         ),
-      ),
-    );
-  }
+  );
 }

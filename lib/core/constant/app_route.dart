@@ -5,4 +5,7 @@ class AppRoute {
   static const String register = '/register';
   static const String carDetail = '/carDetail';
   static const String brawesCars = "/brawes_cars";
+  static const String personalDetails = "/personal_details";
+  static const String successBooking = "/success_booking";
+  static const String splash = "/splash";
 }

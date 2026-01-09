@@ -5,13 +5,13 @@ import 'package:car_rent/data/Data%20Layer/model/user_model.dart';
 extension UserModelMapper on UserModel {
   UserEntity toEntity() {
     return UserEntity(
-      id: userID!,
-      fullName: fullName!,
-      email: email!,
-      phone: phone!,
-      role: UserRole.fromInt(role!),
-      isActive: isActive ?? true,
-      createdAt: DateTime.parse(createdAt!),
+      id: userID,
+      fullName: fullName,
+      email: email,
+      phone: phone,
+      role: UserRole.fromInt(role),
+      isActive: isActive,
+      createdAt: DateTime.parse(createdAt),
       license: license?.toEntity(),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:car_rent/Domain%20Layer/Entities/booking_entity.dart';
 import 'package:car_rent/data/Data%20Layer/Remote%20Data%20Sources/booking_remote_data_source.dart';
 import 'package:car_rent/Domain%20Layer/Repository%20Interfaces/i_booking_repository.dart';
 import 'package:car_rent/core/constant/erorr.dart';
@@ -6,23 +7,18 @@ import 'package:dartz/dartz.dart';
 
 class BookingRepository implements IBookingRepository {
   final BookingRemoteDataSource remoteDataSource;
+
   BookingRepository(this.remoteDataSource);
 
   @override
-  Future<Either<Failure, BookingModel>> cancelBooking(int bookingId) {
-    // TODO: implement cancelBooking
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<Failure, BookingModel>> createBooking({
+  Future<Either<Failure, BookingEntity>> createBooking({
     required int userId,
-    required int carId, // FIXED
+    required int carId,
     required double totalPrice,
     required DateTime startDate,
     required DateTime endDate,
   }) async {
-    var response = await remoteDataSource.createBooking(
+    final response = await remoteDataSource.createBooking(
       userId: userId,
       carId: carId,
       totalPrice: totalPrice,
@@ -31,68 +27,44 @@ class BookingRepository implements IBookingRepository {
     );
 
     return response.fold(
-      (l) {
-        return Left(
-          ServerFailure('Unexpected response format: ${l.runtimeType}'),
-        );
-      },
-      (r) {
-        return Right(BookingModel.fromJson(Map<String, dynamic>.from(r)));
-      },
+      (failure) => Left(
+        ServerFailure("Unexpected response format: ${failure.runtimeType}"),
+      ),
+      (json) => Right(BookingModel.fromJson(json).toEntity()),
     );
   }
 
   @override
-  Future<Either<Failure, List<BookingModel>>> getBookingById(int userId) async {
-    var response = await remoteDataSource.getBookingById(userId);
-
-    return response.fold(
-      (l) {
-        return Left(
-          ServerFailure('Unexpected response format: ${l.runtimeType}'),
-        );
-      },
-      (r) {
-        if (r is! List) {
-          return Left(
-            ServerFailure('Unexpected response format: ${r.runtimeType}'),
-          );
-        }
-
-        final bookings = r.map((b) {
-          return BookingModel.fromJson(Map<String, dynamic>.from(b));
-        }).toList();
-
-        return Right(bookings);
-      },
-    );
-  }
-
-  @override
-  Future<Either<Failure, List<BookingModel>>> getUserBookings(
+  Future<Either<Failure, List<BookingEntity>>> getUserBookings(
     int userId,
   ) async {
-    var response = await remoteDataSource.getUserBookings(userId);
+    final response = await remoteDataSource.getBookingById(userId);
 
     return response.fold(
-      (l) {
-        return Left(
-          ServerFailure('Unexpected response format: ${l.runtimeType}'),
+      (failure) => Left(
+        ServerFailure("Unexpected response format: ${failure.runtimeType}"),
+      ),
+      (data) {
+        // Handle if data is a List directly or inside a map
+        final List<dynamic> listCallback = data is List
+            ? data
+            : data['data'] ?? [];
+        return Right(
+          listCallback.map((e) => BookingModel.fromJson(e).toEntity()).toList(),
         );
       },
-      (r) {
-        if (r is! List) {
-          return Left(
-            ServerFailure('Unexpected response format: ${r.runtimeType}'),
-          );
-        }
-
-        final bookings = r.map((b) {
-          return BookingModel.fromJson(Map<String, dynamic>.from(b));
-        }).toList();
-
-        return Right(bookings);
-      },
     );
+  }
+
+  @override
+  Future<Either<Failure, void>> cancelBooking(int bookingId) {
+    // TODO: implement cancelBooking
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, List<BookingEntity>>> getBookingById(int id) {
+    // TODO: implement getBookingById
+    throw UnimplementedError();
   }
 }

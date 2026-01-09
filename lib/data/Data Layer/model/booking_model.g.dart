@@ -12,7 +12,8 @@ _$BookingModelImpl _$$BookingModelImplFromJson(Map<String, dynamic> json) =>
       startDate: json['startDate'] as String?,
       endDate: json['endDate'] as String?,
       totalPrice: (json['totalPrice'] as num?)?.toDouble(),
-      status: $enumDecodeNullable(_$BookingStatusEnumMap, json['status']),
+      status: _$JsonConverterFromJson<String, BookingStatus>(
+          json['status'], const BookingStatusConverter().fromJson),
       userId: (json['userID'] as num?)?.toInt(),
       carId: (json['carID'] as num?)?.toInt(),
       fullName: json['fullName'] as String?,
@@ -27,7 +28,8 @@ Map<String, dynamic> _$$BookingModelImplToJson(_$BookingModelImpl instance) =>
       'startDate': instance.startDate,
       'endDate': instance.endDate,
       'totalPrice': instance.totalPrice,
-      'status': _$BookingStatusEnumMap[instance.status],
+      'status': _$JsonConverterToJson<String, BookingStatus>(
+          instance.status, const BookingStatusConverter().toJson),
       'userID': instance.userId,
       'carID': instance.carId,
       'fullName': instance.fullName,
@@ -36,8 +38,14 @@ Map<String, dynamic> _$$BookingModelImplToJson(_$BookingModelImpl instance) =>
       'year': instance.year,
     };
 
-const _$BookingStatusEnumMap = {
-  BookingStatus.pending: 'pending',
-  BookingStatus.confirmed: 'confirmed',
-  BookingStatus.cancelled: 'cancelled',
-};
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);

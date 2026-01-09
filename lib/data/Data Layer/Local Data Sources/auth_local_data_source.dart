@@ -12,6 +12,8 @@ abstract class AuthLocalDataSource {
   Future<void> setStep(String step);
   String? getStep();
   Future<void> clearStep();
+  Future<bool> isLoggedIn();
+  Future<bool> hasSeenOnBoarding();
 }
 
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
@@ -72,5 +74,17 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   @override
   Future<void> clearStep() async {
     await sharedPreferences.remove(_stepKey);
+  }
+
+  @override
+  Future<bool> hasSeenOnBoarding() {
+    // TODO: implement hasSeenOnBoarding
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> isLoggedIn() {
+    // TODO: implement isLoggedIn
+    throw UnimplementedError();
   }
 }

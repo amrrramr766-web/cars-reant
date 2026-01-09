@@ -9,7 +9,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CarImagesSlider extends StatelessWidget {
   final CarEntity car;
-  const CarImagesSlider({super.key, required this.car});
+  final bool isDark;
+  const CarImagesSlider({super.key, required this.car, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,13 @@ class CarImagesSlider extends StatelessWidget {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        actions: [faveButton(carId: car.id, isFavorited: car.isFavorite)],
+        actions: [
+          faveButton(
+            carId: car.id,
+            isDark: isDark,
+            isFavorited: car.isFavorite,
+          ),
+        ],
         flexibleSpace: FlexibleSpaceBar(
           background: PageView.builder(
             itemCount: images.length,

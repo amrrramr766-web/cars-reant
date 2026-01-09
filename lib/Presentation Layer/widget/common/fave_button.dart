@@ -3,36 +3,49 @@ import 'package:flutter/material.dart';
 import 'package:car_rent/core/constant/app_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:car_rent/server_locator.dart';
 
-Widget faveButton({required int carId, required bool isFavorited}) {
-  return BlocBuilder<FaveCubit, FaveState>(
-    builder: (context, state) {
-      return Padding(
-        padding: const EdgeInsets.only(left: 8.0, top: 3),
-        child: Container(
-          height: 30.h,
-          width: 40.w,
-          decoration: BoxDecoration(
-            color: AppColors.deepPurpleAccent400,
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: AppColors.transparent),
-          ),
-          child: IconButton(
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(),
-            icon: Icon(
-              isFavorited ? Icons.favorite : Icons.favorite_border,
-              color: isFavorited ? AppColors.red : AppColors.white,
-              size: 20,
+Widget faveButton({
+  required int carId,
+  required bool isDark,
+  required bool isFavorited,
+}) {
+  return BlocProvider(
+    create: (context) => sl<FaveCubit>(),
+    child: BlocSelector<FaveCubit, FaveState, bool>(
+      selector: (state) {
+        if (state is FaveCarsLoaded) {
+          return state.faveCars.any((car) => car.id == carId);
+        }
+        return isFavorited;
+      },
+      builder: (context, isFavorited) {
+        return Padding(
+          padding: EdgeInsets.only(left: 8.w, top: 3.h), // responsive padding
+          child: CircleAvatar(
+            radius: 16.r, // responsive radius
+            backgroundColor: isDark ? Colors.black12 : Colors.grey[300],
+            child: IconButton(
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
+              onPressed: () {
+                context.read<FaveCubit>().toggleFave(carId);
+              },
+              icon: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 250),
+                transitionBuilder: (child, anim) =>
+                    ScaleTransition(scale: anim, child: child),
+                child: Icon(
+                  isFavorited ? Icons.favorite : Icons.favorite_border,
+                  key: ValueKey(isFavorited),
+                  color: isFavorited ? AppColors.red : AppColors.white,
+                  size: 20.sp, // responsive size
+                ),
+              ),
             ),
-            onPressed: () {
-              final cubit = context.read<FaveCubit>();
-
-              cubit.toggleFave(carId);
-            },
           ),
-        ),
-      );
-    },
+        );
+      },
+    ),
   );
 }

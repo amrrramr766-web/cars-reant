@@ -1,3 +1,5 @@
+import 'package:car_rent/Presentation%20Layer/pages/auth/cubit/auth/cubit/auth_cubit.dart';
+import 'package:car_rent/data/Data%20Layer/Local%20Data%20Sources/theme_local_sorces.dart';
 import 'package:car_rent/data/Data%20Layer/repositories/booking_repository.dart';
 import 'package:car_rent/data/Data%20Layer/repositories/car_repository.dart';
 import 'package:car_rent/data/Data%20Layer/repositories/favorites_repository.dart';
@@ -26,9 +28,18 @@ Future<void> initServiceLocator() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
   sl.registerLazySingleton<Crud>(() => Crud());
+
+  // Local data sources
+  sl.registerLazySingleton<AuthLocalDataSource>(
+    () => AuthLocalDataSourceImpl(sharedPreferences: sharedPreferences),
+  );
+  sl.registerLazySingleton<ThemeLocalSource>(
+    () => ThemeLocalSourceImpl(sharedPreferences),
+  );
+
   // Remote data sources
   sl.registerLazySingleton<CarRemoteDataSource>(
-    () => CarRemoteDataSource(sl<Crud>()),
+    () => CarRemoteDataSource(sl<Crud>(), sl<AuthLocalDataSource>()),
   );
   sl.registerLazySingleton<BookingRemoteDataSource>(
     () => BookingRemoteDataSource(sl<Crud>()),
@@ -40,36 +51,39 @@ Future<void> initServiceLocator() async {
     () => AuthRemoteDataSource(sl<Crud>()),
   );
 
-  // Local data sources
-  sl.registerLazySingleton<AuthLocalDataSource>(
-    () => AuthLocalDataSourceImpl(sharedPreferences: sharedPreferences),
-  );
-
-  // Repositories (depend on the appropriate data sources)
-  sl.registerLazySingleton<BookingRepository>(
-    () => BookingRepository(sl<BookingRemoteDataSource>()),
+  // Repositories (depends on data sources)
+  sl.registerLazySingleton<AuthRepository>(
+    () => AuthRepository(sl<AuthRemoteDataSource>(), sl<AuthLocalDataSource>()),
   );
   sl.registerLazySingleton<CarRepository>(
     () => CarRepository(sl<CarRemoteDataSource>()),
   );
+  sl.registerLazySingleton<BookingRepository>(
+    () => BookingRepository(sl<BookingRemoteDataSource>()),
+  );
   sl.registerLazySingleton<FavoritesRepository>(
     () => FavoritesRepository(sl<FavoritesRemoteDataSource>()),
   );
-  sl.registerLazySingleton<AuthRepository>(
-    () => AuthRepository(sl<AuthRemoteDataSource>(), sl<AuthLocalDataSource>()),
-  );
 
   // Cubits
+  sl.registerLazySingleton<AuthCubit>(
+    () => AuthCubit(sl<AuthLocalDataSource>()),
+  );
+
+  sl.registerFactory<LoginCubit>(
+    () => LoginCubit(sl<AuthRepository>(), sl<AuthLocalDataSource>()),
+  );
   sl.registerFactory<HomeCubit>(
     () => HomeCubit(sl<CarRepository>(), sl<FavoritesRepository>()),
   );
-  sl.registerFactory<CarsCubit>(() => CarsCubit(sl()));
-  sl.registerFactory<FaveCubit>(() => FaveCubit(sl()));
-  sl.registerFactory<SearchCubit>(() => SearchCubit(sl()));
-  sl.registerFactory<LoginCubit>(() => LoginCubit(sl(), sl()));
+  sl.registerFactory<CarsCubit>(() => CarsCubit(sl<CarRepository>()));
+  sl.registerFactory<FaveCubit>(() => FaveCubit(sl<FavoritesRepository>()));
+  sl.registerFactory<SearchCubit>(() => SearchCubit(sl<CarRepository>()));
   sl.registerFactory<CarDeteailDartCubit>(
     () => CarDeteailDartCubit(sl<CarRepository>()),
   );
   sl.registerFactory<BookingCubit>(() => BookingCubit(sl<BookingRepository>()));
-  sl.registerFactory<ThemeCubit>(() => ThemeCubit());
+  sl.registerFactory<ThemeCubit>(
+    () => ThemeCubit(localSource: sl<ThemeLocalSource>()),
+  );
 }

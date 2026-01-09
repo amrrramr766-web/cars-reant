@@ -1,20 +1,24 @@
 import 'package:equatable/equatable.dart';
 
 /// Booking Entity - Pure business object without JSON dependencies
-class Booking extends Equatable {
+class BookingEntity extends Equatable {
   final int id;
   final DateTime startDate;
   final DateTime endDate;
   final double totalPrice;
   final BookingStatus status;
+  final String brand;
+  final String model;
   final int userId;
   final int carId;
 
-  const Booking({
+  const BookingEntity({
     required this.id,
     required this.startDate,
     required this.endDate,
     required this.totalPrice,
+    required this.brand,
+    required this.model,
     required this.status,
     required this.userId,
     required this.carId,

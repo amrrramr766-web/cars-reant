@@ -1,8 +1,11 @@
+import 'package:car_rent/Presentation%20Layer/pages/auth/cubit/auth/cubit/auth_cubit.dart';
 import 'package:car_rent/Presentation%20Layer/pages/auth/cubit/login/cubit/login_cubit.dart';
 import 'package:car_rent/server_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:car_rent/core/constant/app_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:car_rent/core/constant/app_route.dart';
 
 class LogoutButton extends StatelessWidget {
   const LogoutButton({super.key});
@@ -13,12 +16,8 @@ class LogoutButton extends StatelessWidget {
       create: (context) => LoginCubit(sl(), sl()),
       child: ElevatedButton.icon(
         onPressed: () {
-          context.read<LoginCubit>().logout();
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            '/login',
-            (route) => false,
-          );
+          context.read<AuthCubit>().logout();
+          context.go(AppRoute.login);
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.red100,

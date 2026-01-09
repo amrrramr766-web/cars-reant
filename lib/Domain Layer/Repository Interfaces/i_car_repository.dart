@@ -6,7 +6,17 @@ import 'package:dartz/dartz.dart';
 
 abstract class ICarRepository {
   /// Fetches all available cars
-  Future<Either<Failure, List<CarEntity>>> getCars();
+
+  Future<Either<Failure, List<CarEntity>>> getCars({
+    required int pageNumber,
+    required int pageSize,
+    String? brand,
+    double? minPrice,
+    double? maxPrice,
+    String? gear,
+    String? gas,
+    bool? isAvailable,
+  });
 
   /// Fetches a specific car by ID
   Future<Either<Failure, CarEntity>> getCarById(int id);

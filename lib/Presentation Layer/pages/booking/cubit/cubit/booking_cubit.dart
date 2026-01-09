@@ -1,8 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:car_rent/data/Data%20Layer/model/booking_model.dart';
+import 'package:car_rent/Domain%20Layer/Entities/booking_entity.dart';
 import 'package:car_rent/data/Data%20Layer/repositories/booking_repository.dart';
 import 'package:car_rent/core/constant/erorr.dart';
 import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 part 'booking_state.dart';
@@ -29,7 +30,7 @@ class BookingCubit extends Cubit<BookingState> {
 
     emit(BookingLoading());
     try {
-      final Either<Failure, BookingModel> response = await bookingRepository
+      final Either<Failure, BookingEntity> response = await bookingRepository
           .createBooking(
             userId: userId,
             carId: carId,
@@ -58,7 +59,7 @@ class BookingCubit extends Cubit<BookingState> {
     }
     emit(BookingLoading());
     try {
-      final Either<Failure, List<BookingModel>> response =
+      final Either<Failure, List<BookingEntity>> response =
           await bookingRepository.getUserBookings(userId);
 
       response.fold(
@@ -72,7 +73,7 @@ class BookingCubit extends Cubit<BookingState> {
       );
     } catch (e) {
       // Emit empty list instead of error
-      emit(BookingLoaded([]));
+      emit(BookingFailure(e.toString()));
     }
   }
 }
