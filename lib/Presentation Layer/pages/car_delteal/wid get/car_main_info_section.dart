@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:car_rent/data/Data%20Layer/model/car_model.dart';
+import 'package:car_rent/Data%20Layer/model/car_model.dart';
 
 class CarMainInfoSection extends StatelessWidget {
   final CarModel car;

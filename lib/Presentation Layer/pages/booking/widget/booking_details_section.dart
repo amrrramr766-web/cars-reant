@@ -10,12 +10,12 @@ class BookingDetailsSection extends StatelessWidget {
   final Function(DateTime) onPickEnd;
 
   const BookingDetailsSection({
-    Key? key,
+    super.key,
     required this.startDate,
     required this.endDate,
     required this.onPickStart,
     required this.onPickEnd,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

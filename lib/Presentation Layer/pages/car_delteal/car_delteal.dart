@@ -1,4 +1,4 @@
-import 'package:car_rent/data/Data%20Layer/repositories/favorites_repository.dart';
+import 'package:car_rent/Data%20Layer/repositories/favorites_repository.dart';
 import 'package:car_rent/Domain%20Layer/Entities/car_entity.dart';
 import 'package:car_rent/Presentation%20Layer/pages/Favorites/cubit/cubit/fave_cubit.dart';
 import 'package:car_rent/Presentation%20Layer/pages/car_delteal/wid%20get/car_bottom_bar.dart';

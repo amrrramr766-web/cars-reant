@@ -2,7 +2,7 @@
 import 'package:car_rent/Domain%20Layer/Repository%20Interfaces/i_auth_repository.dart';
 import 'package:car_rent/core/constant/erorr.dart';
 import 'package:dartz/dartz.dart';
-import 'package:car_rent/data/Data%20Layer/model/user_model.dart';
+import 'package:car_rent/Data%20Layer/model/user_model.dart';
 
 class LoginUseCase {
   final IAuthRepository repository;

@@ -2,11 +2,12 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:car_rent/Domain%20Layer/Entities/car_entity.dart';
+import 'package:car_rent/Domain%20Layer/Repository%20Interfaces/i_car_repository.dart';
 import 'package:car_rent/Presentation%20Layer/controller/search/cubit/search_state.dart';
-import 'package:car_rent/data/Data%20Layer/repositories/car_repository.dart';
+import 'package:car_rent/Data%20Layer/repositories/car_repository.dart';
 
 class SearchCubit extends Cubit<SearchState> {
-  final CarRepository searchRepository;
+  final ICarRepository searchRepository;
 
   SearchCubit(this.searchRepository) : super(SearchInitial());
 
@@ -21,7 +22,7 @@ class SearchCubit extends Cubit<SearchState> {
       emit(SearchResultsLoading());
 
       try {
-        final response = await searchRepository.search(query);
+        final response = await searchRepository.searchCars(query);
         response.fold(
           (failure) =>
               emit(SearchError("حدث خطأ في الاتصال: ${failure.toString()}")),

@@ -1,11 +1,11 @@
 import 'package:car_rent/core/constant/app_colors.dart';
-import 'package:car_rent/data/Data%20Layer/model/offer_model.dart';
+import 'package:car_rent/Data%20Layer/model/offer_model.dart';
 import 'package:flutter/material.dart';
 
 class OfferCard extends StatelessWidget {
   final OfferModel offer;
 
-  const OfferCard({required this.offer});
+  const OfferCard({super.key, required this.offer});
 
   @override
   Widget build(BuildContext context) {

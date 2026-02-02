@@ -1,9 +1,9 @@
-import 'package:car_rent/Presentation%20Layer/pages/auth/cubit/auth/cubit/auth_cubit.dart';
-import 'package:car_rent/data/Data%20Layer/Local%20Data%20Sources/theme_local_sorces.dart';
-import 'package:car_rent/data/Data%20Layer/repositories/booking_repository.dart';
-import 'package:car_rent/data/Data%20Layer/repositories/car_repository.dart';
-import 'package:car_rent/data/Data%20Layer/repositories/favorites_repository.dart';
-import 'package:car_rent/Presentation%20Layer/pages/auth/cubit/login/cubit/login_cubit.dart';
+import 'package:car_rent/Presentation%20Layer/pages/auth/logic/auth/cubit/auth_cubit.dart';
+import 'package:car_rent/Data%20Layer/Local%20Data%20Sources/theme_local_sorces.dart';
+import 'package:car_rent/Data%20Layer/repositories/booking_repository.dart';
+import 'package:car_rent/Data%20Layer/repositories/car_repository.dart';
+import 'package:car_rent/Data%20Layer/repositories/favorites_repository.dart';
+import 'package:car_rent/Presentation%20Layer/pages/auth/logic/login/cubit/login_cubit.dart';
 import 'package:car_rent/Presentation%20Layer/pages/booking/cubit/cubit/booking_cubit.dart';
 import 'package:car_rent/Presentation%20Layer/pages/car_delteal/cubit/cubit/car_deteail_dart_cubit.dart';
 import 'package:car_rent/Presentation%20Layer/pages/cars/cubit/cubit/cars_cubit.dart';
@@ -14,12 +14,12 @@ import 'package:get_it/get_it.dart';
 import 'package:car_rent/core/class/crud.dart';
 import 'package:car_rent/Presentation%20Layer/pages/home/cubit/cubit/home_cubit.dart';
 
-import 'package:car_rent/data/Data%20Layer/Remote%20Data%20Sources/auth_remote_data_source.dart';
-import 'package:car_rent/data/Data%20Layer/Local%20Data%20Sources/auth_local_data_source.dart';
-import 'package:car_rent/data/Data%20Layer/Remote%20Data%20Sources/car_remote_data_source.dart';
-import 'package:car_rent/data/Data%20Layer/Remote%20Data%20Sources/booking_remote_data_source.dart';
-import 'package:car_rent/data/Data%20Layer/Remote%20Data%20Sources/favorites_remote_data_source.dart';
-import 'package:car_rent/data/Data%20Layer/repositories/auth_repository.dart';
+import 'package:car_rent/Data%20Layer/Remote%20Data%20Sources/auth_remote_data_source.dart';
+import 'package:car_rent/Data%20Layer/Local%20Data%20Sources/auth_local_data_source.dart';
+import 'package:car_rent/Data%20Layer/Remote%20Data%20Sources/car_remote_data_source.dart';
+import 'package:car_rent/Data%20Layer/Remote%20Data%20Sources/booking_remote_data_source.dart';
+import 'package:car_rent/Data%20Layer/Remote%20Data%20Sources/favorites_remote_data_source.dart';
+import 'package:car_rent/Data%20Layer/repositories/auth_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;

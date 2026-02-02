@@ -10,16 +10,20 @@ class BookingBottomBar extends StatelessWidget {
   final DateTime? startDate;
   final DateTime? endDate;
   final double totalPrice;
+  final String image;
+  final String carName;
 
   const BookingBottomBar({
-    Key? key,
+    super.key,
     required this.totalDays,
     required this.carId,
     required this.userId,
     required this.startDate,
     required this.endDate,
     required this.totalPrice,
-  }) : super(key: key);
+    required this.image,
+    required this.carName,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +34,8 @@ class BookingBottomBar extends StatelessWidget {
         border: Border(top: BorderSide(color: AppColors.greyShades[300]!)),
       ),
       child: ConfirmBookingButton(
+        image: image,
+        name: carName,
         totalDays: totalDays,
         carId: carId,
         userId: userId,

@@ -2,6 +2,9 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:car_rent/server_locator.dart';
+import 'package:car_rent/Data%20Layer/Local%20Data%20Sources/auth_local_data_source.dart';
+import 'package:car_rent/core/class/auth_interceptor.dart';
 
 class DioFactory {
   static Dio create() {
@@ -16,12 +19,10 @@ class DioFactory {
         },
       ),
     );
-
+    dio.interceptors.add(AuthInterceptor(sl<AuthLocalDataSource>()));
     if (!bool.fromEnvironment('dart.vm.product')) {
       dio.interceptors.add(
         PrettyDioLogger(
-          requestHeader: true,
-          requestBody: true,
           responseHeader: false,
           responseBody: true,
           error: true,

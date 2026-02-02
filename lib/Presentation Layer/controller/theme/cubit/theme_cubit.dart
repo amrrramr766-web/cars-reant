@@ -1,4 +1,4 @@
-import 'package:car_rent/data/Data%20Layer/Local%20Data%20Sources/theme_local_sorces.dart';
+import 'package:car_rent/Data%20Layer/Local%20Data%20Sources/theme_local_sorces.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

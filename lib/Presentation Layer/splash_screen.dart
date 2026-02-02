@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:car_rent/Presentation%20Layer/pages/auth/cubit/auth/cubit/auth_cubit.dart';
+import 'package:car_rent/Presentation%20Layer/pages/auth/logic/auth/cubit/auth_cubit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:car_rent/core/constant/app_route.dart';
 

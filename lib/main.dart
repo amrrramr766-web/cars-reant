@@ -1,4 +1,4 @@
-import 'package:car_rent/Presentation%20Layer/pages/auth/cubit/auth/cubit/auth_cubit.dart';
+import 'package:car_rent/Presentation%20Layer/pages/auth/logic/auth/cubit/auth_cubit.dart';
 import 'package:car_rent/app.dart';
 import 'package:car_rent/Presentation%20Layer/controller/theme/cubit/theme_cubit.dart';
 import 'package:car_rent/server_locator.dart';

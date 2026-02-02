@@ -1,5 +1,5 @@
-import 'package:car_rent/data/Data%20Layer/Local%20Data%20Sources/auth_local_data_source.dart';
-import 'package:car_rent/data/Data%20Layer/model/user_model.dart';
+import 'package:car_rent/Data%20Layer/Local%20Data%20Sources/auth_local_data_source.dart';
+import 'package:car_rent/Data%20Layer/model/user_model.dart';
 import 'package:car_rent/Presentation%20Layer/widget/common/title_section.dart';
 import 'package:car_rent/Presentation%20Layer/pages/user/widget/account_section.dart';
 import 'package:car_rent/Presentation%20Layer/pages/user/widget/logout_button.dart';

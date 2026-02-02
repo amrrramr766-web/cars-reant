@@ -10,13 +10,13 @@ class BookingDetailItem extends StatelessWidget {
   final VoidCallback onEdit;
 
   const BookingDetailItem({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     required this.subtitle1,
     required this.subtitle2,
     required this.onEdit,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

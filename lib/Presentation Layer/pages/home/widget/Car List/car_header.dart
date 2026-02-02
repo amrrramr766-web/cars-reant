@@ -9,7 +9,7 @@ class CarHeader extends StatelessWidget {
   final CarEntity car;
   final bool isdark;
 
-  const CarHeader({required this.car, required this.isdark});
+  const CarHeader({super.key, required this.car, required this.isdark});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class CarSpecs extends StatelessWidget {
   final CarEntity car;
   final bool isdark;
 
-  const CarSpecs({required this.car, required this.isdark});
+  const CarSpecs({super.key, required this.car, required this.isdark});
   @override
   Widget build(BuildContext context) {
     return Text(
@@ -60,7 +60,7 @@ class SelectButton extends StatelessWidget {
   final CarEntity car;
   final bool isdark;
 
-  const SelectButton({required this.car, required this.isdark});
+  const SelectButton({super.key, required this.car, required this.isdark});
   @override
   Widget build(BuildContext context) {
     return SizedBox(

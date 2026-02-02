@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 
-import 'package:car_rent/data/Data%20Layer/repositories/favorites_repository.dart';
+import 'package:car_rent/Data%20Layer/repositories/favorites_repository.dart';
 import 'package:car_rent/Domain%20Layer/Entities/car_entity.dart';
 
 import 'package:equatable/equatable.dart';

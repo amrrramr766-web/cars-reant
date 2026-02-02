@@ -1,6 +1,6 @@
 // lib/domain/repositories/i_auth_repository.dart
 import 'package:car_rent/core/constant/erorr.dart';
-import 'package:car_rent/data/Data%20Layer/model/user_model.dart';
+import 'package:car_rent/Data%20Layer/model/user_model.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class IAuthRepository {

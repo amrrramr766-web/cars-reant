@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:car_rent/Domain%20Layer/Entities/car_entity.dart';
 import 'package:car_rent/Presentation%20Layer/pages/cars/cubit/cubit/cars_state.dart';
-import 'package:car_rent/data/Data%20Layer/repositories/car_repository.dart';
+import 'package:car_rent/Data%20Layer/repositories/car_repository.dart';
 
 class CarsCubit extends Cubit<CarsState> {
   final CarRepository carRepository;

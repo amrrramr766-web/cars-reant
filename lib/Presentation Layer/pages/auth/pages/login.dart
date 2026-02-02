@@ -1,8 +1,8 @@
-import 'package:car_rent/Presentation%20Layer/pages/auth/cubit/auth/cubit/auth_cubit.dart';
-import 'package:car_rent/data/Data%20Layer/Local%20Data%20Sources/auth_local_data_source.dart';
-import 'package:car_rent/data/Data%20Layer/model/login_requst.dart';
-import 'package:car_rent/data/Data%20Layer/repositories/auth_repository.dart';
-import 'package:car_rent/Presentation%20Layer/pages/auth/cubit/login/cubit/login_cubit.dart';
+import 'package:car_rent/Data%20Layer/Local%20Data%20Sources/auth_local_data_source.dart';
+import 'package:car_rent/Data%20Layer/model/login_requst.dart';
+import 'package:car_rent/Data%20Layer/repositories/auth_repository.dart';
+import 'package:car_rent/Presentation%20Layer/pages/auth/logic/auth/cubit/auth_cubit.dart';
+import 'package:car_rent/Presentation%20Layer/pages/auth/logic/login/cubit/login_cubit.dart';
 import 'package:car_rent/core/constant/app_colors.dart';
 import 'package:car_rent/l10n/app_localizations.dart';
 

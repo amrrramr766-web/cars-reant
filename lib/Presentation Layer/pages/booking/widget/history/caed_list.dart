@@ -1,8 +1,8 @@
-import 'package:car_rent/data/Data%20Layer/Local%20Data%20Sources/auth_local_data_source.dart';
+import 'package:car_rent/Data%20Layer/Local%20Data%20Sources/auth_local_data_source.dart';
+import 'package:car_rent/Data%20Layer/Remote%20Data%20Sources/booking_remote_data_source.dart';
+import 'package:car_rent/Data%20Layer/repositories/booking_repository.dart';
 import 'package:car_rent/Presentation%20Layer/pages/booking/cubit/cubit/booking_cubit.dart';
 import 'package:car_rent/Domain%20Layer/Entities/booking_entity.dart';
-import 'package:car_rent/data/Data%20Layer/Remote%20Data%20Sources/booking_remote_data_source.dart';
-import 'package:car_rent/data/Data%20Layer/repositories/booking_repository.dart';
 import 'package:car_rent/Presentation%20Layer/pages/booking/widget/history/rental_card.dart';
 import 'package:car_rent/server_locator.dart';
 import 'package:flutter/material.dart';
@@ -83,9 +83,11 @@ class _CardListState extends State<CardList> {
                 itemBuilder: (context, index) {
                   final booking = filteredBookings[index];
                   final status = booking.status; // BookingStatus?
-                  final statusText = status != null
-                      ? status.toString().split('.').last.toUpperCase()
-                      : 'UNKNOWN';
+                  final statusText = status
+                      .toString()
+                      .split('.')
+                      .last
+                      .toUpperCase();
 
                   return RentalCard(
                     status: statusText,

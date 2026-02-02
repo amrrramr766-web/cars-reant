@@ -2,7 +2,7 @@ import 'package:car_rent/Domain%20Layer/Entities/car_entity.dart';
 import 'package:car_rent/Presentation%20Layer/pages/booking/cubit/cubit/booking_cubit.dart';
 import 'package:car_rent/Presentation%20Layer/pages/booking/pages/booking.dart';
 import 'package:car_rent/Presentation%20Layer/widget/common/fave_button.dart';
-import 'package:car_rent/data/Data%20Layer/repositories/booking_repository.dart';
+import 'package:car_rent/Data%20Layer/repositories/booking_repository.dart';
 import 'package:car_rent/server_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

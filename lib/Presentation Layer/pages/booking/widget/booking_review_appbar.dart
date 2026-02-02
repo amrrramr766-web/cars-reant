@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 class BookingReviewAppBar extends StatelessWidget
     implements PreferredSizeWidget {
-  const BookingReviewAppBar({Key? key}) : super(key: key);
+  const BookingReviewAppBar({super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);

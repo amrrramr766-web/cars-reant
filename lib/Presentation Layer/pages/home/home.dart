@@ -4,7 +4,6 @@ import 'package:car_rent/Presentation%20Layer/pages/Favorites/cubit/cubit/fave_c
 import 'package:car_rent/Presentation%20Layer/pages/Favorites/favorites_page.dart';
 import 'package:car_rent/Presentation%20Layer/pages/booking/cubit/cubit/booking_cubit.dart';
 import 'package:car_rent/Presentation%20Layer/pages/booking/pages/booking_history.dart';
-import 'package:car_rent/Presentation%20Layer/pages/cars/cubit/cubit/cars_cubit.dart';
 import 'package:car_rent/Presentation%20Layer/pages/home/cubit/cubit/home_cubit.dart';
 import 'package:car_rent/Presentation%20Layer/pages/home/widget/custom_app_bar.dart';
 import 'package:car_rent/Presentation%20Layer/pages/home/widget/home_content.dart';

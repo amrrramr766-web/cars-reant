@@ -7,7 +7,7 @@ class CarImage extends StatelessWidget {
   final CarEntity car;
   final bool isdark;
 
-  const CarImage({required this.car, required this.isdark});
+  const CarImage({super.key, required this.car, required this.isdark});
 
   @override
   Widget build(BuildContext context) {

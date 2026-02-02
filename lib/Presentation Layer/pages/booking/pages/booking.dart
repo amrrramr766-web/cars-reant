@@ -69,6 +69,8 @@ class _BookingReviewPageState extends State<BookingReviewPage> {
       bottomNavigationBar: BookingBottomBar(
         totalDays: totalDays,
         carId: widget.car.id,
+        image: widget.car.imageUrl,
+        carName: "${widget.car.brand} ${widget.car.model} ${widget.car.year}",
         userId: userId,
         startDate: startDate,
         endDate: endDate,

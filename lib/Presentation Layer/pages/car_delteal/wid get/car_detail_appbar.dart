@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:car_rent/data/Data%20Layer/model/car_model.dart';
+import 'package:car_rent/Domain%20Layer/Entities/car_entity.dart';
 
 class CarDetailAppBar extends StatelessWidget {
-  final CarModel car;
+  final CarEntity car;
   const CarDetailAppBar({super.key, required this.car});
 
   @override
@@ -11,9 +11,9 @@ class CarDetailAppBar extends StatelessWidget {
       expandedHeight: 300,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
-        background: (car.imageUrl != null && car.imageUrl!.isNotEmpty)
+        background: (car.imageUrl.isNotEmpty)
             ? Image.network(
-                car.imageUrl!,
+                car.imageUrl,
                 fit: BoxFit.cover,
                 errorBuilder: (_, __, ___) => const Center(
                   child: Icon(

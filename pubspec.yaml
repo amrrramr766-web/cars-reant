@@ -46,6 +46,7 @@ dependencies:
   shimmer: ^3.0.0
   infinite_scroll_pagination: ^5.1.1
   go_router: ^17.0.1
+  flutter_stripe: ^11.5.0
 
 dev_dependencies:
   flutter_lints: ^5.0.0

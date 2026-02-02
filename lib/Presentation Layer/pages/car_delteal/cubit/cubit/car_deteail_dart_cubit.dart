@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:car_rent/data/Data%20Layer/repositories/car_repository.dart';
-import 'package:car_rent/data/Data%20Layer/model/reviwe_model.dart';
+import 'package:car_rent/Data%20Layer/model/reviwe_model.dart';
+import 'package:car_rent/Data%20Layer/repositories/car_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 

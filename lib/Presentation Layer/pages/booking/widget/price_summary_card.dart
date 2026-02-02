@@ -7,10 +7,10 @@ class PriceSummaryCard extends StatelessWidget {
   final double pricePerDay;
 
   const PriceSummaryCard({
-    Key? key,
+    super.key,
     required this.totalDays,
     required this.pricePerDay,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class PriceSummaryCard extends StatelessWidget {
     const gps = 15.0;
     final double grandTotal = totalPrice + taxesAndFees + cdw + gps;
 
-    Widget _priceRow(String label, String value, {bool bold = false}) {
+    Widget priceRow(String label, String value, {bool bold = false}) {
       return Padding(
         padding: EdgeInsets.symmetric(vertical: 4.h),
         child: Row(
@@ -53,15 +53,15 @@ class PriceSummaryCard extends StatelessWidget {
         padding: EdgeInsets.all(16.w),
         child: Column(
           children: [
-            _priceRow(
+            priceRow(
               "Rental fee ($totalDays days x \$${pricePerDay.toStringAsFixed(2)})",
               "\$${totalPrice.toStringAsFixed(2)}",
             ),
-            _priceRow("Taxes & Fees", "\$${taxesAndFees.toStringAsFixed(2)}"),
-            _priceRow("Collision Damage Waiver", "\$${cdw.toStringAsFixed(2)}"),
-            _priceRow("GPS Navigation", "\$${gps.toStringAsFixed(2)}"),
+            priceRow("Taxes & Fees", "\$${taxesAndFees.toStringAsFixed(2)}"),
+            priceRow("Collision Damage Waiver", "\$${cdw.toStringAsFixed(2)}"),
+            priceRow("GPS Navigation", "\$${gps.toStringAsFixed(2)}"),
             Divider(height: 20.h, color: AppColors.greyShades[400]),
-            _priceRow(
+            priceRow(
               "Total Cost",
               "\$${grandTotal.toStringAsFixed(2)}",
               bold: true,

@@ -1,4 +1,4 @@
-import 'package:car_rent/data/Data%20Layer/model/suggestions_model.dart';
+import 'package:car_rent/Data%20Layer/model/suggestions_model.dart';
 import 'package:equatable/equatable.dart';
 
 sealed class SearchState extends Equatable {

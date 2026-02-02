@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:car_rent/Presentation%20Layer/pages/home/widget/offer_card.dart';
-import 'package:car_rent/data/Data%20Layer/model/offer_model.dart';
+import 'package:car_rent/Data%20Layer/model/offer_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 

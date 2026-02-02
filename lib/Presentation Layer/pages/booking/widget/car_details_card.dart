@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CarDetailsCard extends StatelessWidget {
   final CarEntity car;
-  const CarDetailsCard({Key? key, required this.car}) : super(key: key);
+  const CarDetailsCard({super.key, required this.car});
 
   @override
   Widget build(BuildContext context) {

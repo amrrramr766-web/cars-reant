@@ -15,14 +15,14 @@ class BookingReviewBody extends StatelessWidget {
   final Function(DateTime) onPickEnd;
 
   const BookingReviewBody({
-    Key? key,
+    super.key,
     required this.car,
     required this.startDate,
     required this.endDate,
     required this.totalDays,
     required this.onPickStart,
     required this.onPickEnd,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

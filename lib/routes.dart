@@ -1,14 +1,18 @@
 import 'package:car_rent/Domain%20Layer/Entities/car_entity.dart';
 import 'package:car_rent/Presentation%20Layer/controller/theme/cubit/theme_cubit.dart';
-import 'package:car_rent/Presentation%20Layer/pages/auth/cubit/auth/cubit/auth_cubit.dart';
+import 'package:car_rent/Presentation%20Layer/pages/auth/logic/auth/cubit/auth_cubit.dart';
+import 'package:car_rent/Presentation%20Layer/pages/booking/pages/booking_history.dart';
 import 'package:car_rent/Presentation%20Layer/pages/car_delteal/cubit/cubit/car_deteail_dart_cubit.dart';
 import 'package:car_rent/Presentation%20Layer/pages/cars/cubit/cubit/cars_cubit.dart';
+import 'package:car_rent/Presentation%20Layer/pages/payment/checkout/page/checkout_page.dart';
+import 'package:car_rent/Presentation%20Layer/pages/payment/checkout/helper/checkout_args.dart';
+import 'package:car_rent/Presentation%20Layer/pages/payment/success/payment_success_page.dart';
 import 'package:car_rent/Presentation%20Layer/pages/user/cubit/user_cubit.dart';
 import 'package:car_rent/Presentation%20Layer/pages/user/personalDetail/personal_detail_page.dart';
 import 'package:car_rent/Presentation%20Layer/pages/booking/pages/success_booking.dart';
 import 'package:car_rent/Presentation%20Layer/splash_screen.dart';
 import 'package:car_rent/core/helper/go_router_refresh_stream%20.dart';
-import 'package:car_rent/data/Data%20Layer/repositories/auth_repository.dart';
+import 'package:car_rent/Data%20Layer/repositories/auth_repository.dart';
 
 import 'package:car_rent/Presentation%20Layer/widget/common/route_error_page.dart';
 import 'package:car_rent/core/constant/app_route.dart';
@@ -77,11 +81,18 @@ final GoRouter router = GoRouter(
       ),
     ),
     GoRoute(
-      path: '${AppRoute.carDetail}/:id',
+      name: AppRoute.bookingHistory,
+      path: AppRoute.bookingHistory,
+      builder: (context, state) => const BookingHistoryPage(),
+    ),
+
+    GoRoute(
+      path: '${AppRoute.carDetail}/:carId',
       builder: (context, state) {
         final car = state.extra as CarEntity?;
-        if (car == null)
+        if (car == null) {
           return const RouteErrorPage(message: 'Invalid car data');
+        }
         return BlocProvider(
           create: (_) {
             final cubit = sl<CarDeteailDartCubit>();
@@ -105,6 +116,41 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoute.successBooking,
       builder: (_, __) => const SuccessBooking(),
+    ),
+    GoRoute(
+      path: AppRoute.checkout,
+      builder: (context, state) {
+        final args = state.extra as CheckoutArgs?;
+        if (args == null) {
+          return const RouteErrorPage(message: 'Invalid checkout data');
+        }
+        return CheckoutPage(
+          image: args.image,
+          name: args.name,
+          date: args.date,
+          price: args.price,
+        );
+      },
+    ),
+    GoRoute(
+      path: AppRoute.paymentSuccess,
+      builder: (context, state) {
+        final args = state.extra as CheckoutArgs?;
+        if (args == null) {
+          return const RouteErrorPage(message: 'Invalid payment data');
+        }
+
+        return PaymentSuccessPage(
+          transactionId:
+              args.transactionId ??
+              "MOCK-${DateTime.now().millisecondsSinceEpoch}",
+          carName: args.name,
+          dateRange: args.date,
+          location: "Dubai, UAE", // Default or could be added to args
+          imageUrl: args.image,
+          price: args.price,
+        );
+      },
     ),
   ],
 );

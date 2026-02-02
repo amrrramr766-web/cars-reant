@@ -1,6 +1,6 @@
 import 'package:car_rent/core/constant/app_route.dart';
 
-import 'package:car_rent/data/Data%20Layer/model/suggestions_model.dart';
+import 'package:car_rent/Data%20Layer/model/suggestions_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:car_rent/Presentation%20Layer/controller/search/cubit/search_cubit.dart';
@@ -105,7 +105,7 @@ class SearchPage extends SearchDelegate<void> {
         final car = suggestions[index];
         return ListTile(
           title: Text(car.carName ?? ''),
-          subtitle: Text(car.category ?? ''),
+          subtitle: Text(car.presPerDay.toString() ?? ''),
           onTap: () async {
             final carDetails = await searchCubit.getCarDetails(car.carId!);
 
@@ -142,7 +142,7 @@ class SearchPage extends SearchDelegate<void> {
         final car = results[index];
         return ListTile(
           title: Text(car.carName ?? ''),
-          subtitle: Text(car.category ?? ''),
+          subtitle: Text(car.presPerDay.toString() ?? ''),
           onTap: () async {
             final carDetails = await searchCubit.getCarDetails(car.id!);
 

@@ -7,10 +7,10 @@ class PriceSummarySection extends StatelessWidget {
   final double pricePerDay;
 
   const PriceSummarySection({
-    Key? key,
+    super.key,
     required this.totalDays,
     required this.pricePerDay,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
