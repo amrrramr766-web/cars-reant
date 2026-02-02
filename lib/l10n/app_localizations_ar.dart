@@ -24,13 +24,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get fastDelivery => 'توصيل سريع';
 
   @override
-  String get chooseProductDesc => 'لدينا الكثير من المنتجات لك، اختر ما تريد وسنقوم بتوصيله لك';
+  String get chooseProductDesc =>
+      'لدينا الكثير من المنتجات لك، اختر ما تريد وسنقوم بتوصيله لك';
 
   @override
-  String get easyPaymentDesc => 'الدفع سهل وآمن، وسنقوم بتوصيل منتجك بأسرع وقت ممكن';
+  String get easyPaymentDesc =>
+      'الدفع سهل وآمن، وسنقوم بتوصيل منتجك بأسرع وقت ممكن';
 
   @override
-  String get fastDeliveryDesc => 'سوف نوصل منتجك في أسرع وقت ممكن، فقط انتظر وسنوصله لك';
+  String get fastDeliveryDesc =>
+      'سوف نوصل منتجك في أسرع وقت ممكن، فقط انتظر وسنوصله لك';
 
   @override
   String get nextButton => 'التالي';

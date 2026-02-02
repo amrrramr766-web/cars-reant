@@ -24,13 +24,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fastDelivery => 'Fast delivery';
 
   @override
-  String get chooseProductDesc => 'We have many products for you, choose what you want and we will deliver it to you.';
+  String get chooseProductDesc =>
+      'We have many products for you, choose what you want and we will deliver it to you.';
 
   @override
-  String get easyPaymentDesc => 'Payment is easy and secure, and we will deliver your product as soon as possible.';
+  String get easyPaymentDesc =>
+      'Payment is easy and secure, and we will deliver your product as soon as possible.';
 
   @override
-  String get fastDeliveryDesc => 'We will deliver your product as quickly as possible, just wait and we will bring it to you.';
+  String get fastDeliveryDesc =>
+      'We will deliver your product as quickly as possible, just wait and we will bring it to you.';
 
   @override
   String get nextButton => 'Next';

@@ -1,15 +1,19 @@
 class LinkApi {
+  // static const String baseUrl = "http://0.0.0.0:5267/api";
   static const String baseUrl = "http://192.168.1.6:5267/api";
 
   // Users
-  static const String login = "$baseUrl/users/login";
-  static const String register = "$baseUrl/users/register";
+  static const String login = "$baseUrl/users/Login";
+  static const String register = "$baseUrl/users/Register";
   static const String userinfo = "$baseUrl/users/"; // GET + id => Get user info
   static const String userLicense =
       "$baseUrl/users/"; // GET + id => Get user license info
 
   // Cars
-  static const String getCars = "$baseUrl/car?userId="; // GET => Get all cars
+  static String getCars() {
+    return "$baseUrl/car/search"; // فقط الرابط، البيانات سترسل في body عند POST
+  }
+
   static const String getCarById = "$baseUrl/car/"; // GET + id => Get car by Id
   static const String addCar = "$baseUrl/car"; // POST => Add new car
   static const String updateCar = "$baseUrl/car/"; // PUT + id => Update car
@@ -33,12 +37,12 @@ class LinkApi {
   static const String getSuggestions =
       "$baseUrl/car/suggestions/all"; // GET => Get all suggestions
 
-  static const String Search =
+  static const String search =
       "$baseUrl/car/search"; // POST => Send search query
 
   // Favorites
-  static const String getFavoritesByUser = "$baseUrl/Favorite/GetByUser";
-  static const String addFavorite = "$baseUrl/fave/add";
+  static const String getFavoritesByUser = "$baseUrl/fave/list?userId=";
+  static const String toggleFavorite = "$baseUrl/fave/toggle";
   static const String deleteFavorite = "$baseUrl/fave/remove?faveid=";
 }
 

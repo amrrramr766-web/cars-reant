@@ -1,60 +1,85 @@
-import 'dart:convert';
-import 'dart:io';
+import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:car_rent/core/class/states_request.dart';
 import 'package:car_rent/core/functions/check_internet.dart';
-import 'package:dartz/dartz.dart';
-import 'package:http/io_client.dart';
+import 'package:car_rent/core/class/icrud.dart';
+import 'dio_factory.dart';
 
-class Crud {
-  Future<Either<StatusRequest, Map>> postData(
+class Crud implements IHttpGet, IHttpPost {
+  final Dio _dio = DioFactory.create();
+
+  @override
+  Future<Either<StatusRequest, dynamic>> postData(
     String linkurl,
-    Map<String, dynamic> data, // Map بدلاً من String
-  ) async {
-    HttpClient httpClient = HttpClient()
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-    IOClient ioClient = IOClient(httpClient);
+    Map<String, dynamic>? data, {
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    if (!await checkInternet()) {
+      return const Left(StatusRequest.offlinefailure);
+    }
 
-    var response = await ioClient.post(
-      Uri.parse(linkurl),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(data), // JSON
-    );
+    try {
+      final response = await _dio.post(
+        linkurl,
+        data: data,
+        queryParameters: queryParameters,
+      );
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      return Right(jsonDecode(response.body));
-    } else {
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return Right(response.data);
+      }
+
+      return const Left(StatusRequest.serverfailure);
+    } on DioException catch (e) {
+      return Left(_mapDioErrorToStatus(e));
+    } catch (_) {
       return const Left(StatusRequest.serverfailure);
     }
   }
 
+  @override
   Future<Either<StatusRequest, dynamic>> getData(String linkurl) async {
-    if (await checkInternet()) {
-      try {
-        HttpClient httpClient = HttpClient()
-          ..badCertificateCallback =
-              (X509Certificate cert, String host, int port) => true;
-
-        IOClient ioClient = IOClient(httpClient);
-
-        var uri = Uri.parse(linkurl);
-        var response = await ioClient.get(
-          uri,
-          headers: {'Content-Type': 'application/json'},
-        );
-
-        if (response.statusCode == 200 || response.statusCode == 201) {
-          final responsebody = jsonDecode(response.body);
-          return Right(responsebody); // ممكن يبقى Map أو List
-        } else {
-          return const Left(StatusRequest.serverfailure);
-        }
-      } catch (e) {
-        print("💥 [Crud] Exception in getData: $e");
-        return const Left(StatusRequest.serverfailure);
-      }
-    } else {
+    if (!await checkInternet()) {
       return const Left(StatusRequest.offlinefailure);
+    }
+
+    try {
+      final response = await _dio.get(linkurl);
+
+      if (response.statusCode == 200) {
+        return Right(response.data);
+      }
+
+      return const Left(StatusRequest.serverfailure);
+    } on DioException catch (e) {
+      return Left(_mapDioErrorToStatus(e));
+    } catch (_) {
+      return const Left(StatusRequest.serverfailure);
+    }
+  }
+
+  StatusRequest _mapDioErrorToStatus(DioException e) {
+    switch (e.type) {
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.sendTimeout:
+      case DioExceptionType.receiveTimeout:
+        return StatusRequest.timeout;
+
+      case DioExceptionType.badResponse:
+        switch (e.response?.statusCode) {
+          case 401:
+            return StatusRequest.unauthorized;
+          case 404:
+            return StatusRequest.notfound;
+          default:
+            return StatusRequest.serverfailure;
+        }
+
+      case DioExceptionType.connectionError:
+        return StatusRequest.offlinefailure;
+
+      default:
+        return StatusRequest.serverfailure;
     }
   }
 }
